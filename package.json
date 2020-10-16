@@ -1,18 +1,21 @@
 {
-  "name": "pp5",
+  "name": "projet_recherche",
   "version": "1.0.0",
-  "description": "TournoisJeux",
-  "main": "index.js",
+  "description": "Projet pratique du cours de génie logiciel",
+  "main": "server/server.js",
   "scripts": {
-    "debug" : "nodemon ./Serveur/main.js"
+    "debug": "nodemon ./server/server.js"
   },
-  "author": "Lucas Gonzalez, Victor Ada",
-  "license": "ISC",
+  "author": "Équipe projet pratique - Groupe 3",
+  "license": "MIT",
   "dependencies": {
     "body-parser": "^1.19.0",
     "client-sessions": "^0.8.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
     "mongoose": "^5.10.7"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.5"
   }
 }
