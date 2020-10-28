@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const path = require("path");
 const sessions = require("client-sessions");
 const mongoose = require('mongoose');
+const ConnexionBDMongo = require('./class/Models/ConnexionBDMongo');
 
 /* Middleware */
 const app = express();
@@ -20,10 +21,17 @@ const PORT  = 5500;
 var Login =  require("./Routes/Connexion/Login");
 var Home =  require("./Routes/Home");
 
+
 /* Routes */
 app.use('/', Home);
 app.use('/Login', Login);
 
 
 /* Serveur Start */
-var server = app.listen(PORT,'localhost',() => console.log(`Serveur Running on : http://localhost:${PORT}`));
+var server = app.listen(PORT,'localhost',() => {
+
+    console.log(`Serveur Running on : http://localhost:${PORT}`)
+
+    ConnexionBDMongo.getInstance()
+
+});
