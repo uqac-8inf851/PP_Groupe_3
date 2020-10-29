@@ -10,7 +10,7 @@ const Searcher = require("./class/Models/Models").Searcher
 
 /* Middleware */
 const app = express();
-app.use(express.static('../Public' ));
+app.use(express.static('./Public' ));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -24,7 +24,7 @@ app.use(
   }))
 
 app.engine('html', require('ejs').renderFile);
-app.set('views', '../Public/views');
+app.set('views', './Public/views');
 app.set('view engine', 'ejs');
 
 const PORT  = 5500;
