@@ -70,6 +70,9 @@ const projectSchema = new Schema({
 //     - notes (string)
 //     - est archivé (boolean)
 //     - status (int -> enum)
+//          - 0 : en cours
+//          - 1 : finie
+//          - 2 : en attente
 //     - date début (date)
 //     - date fin (date)
 //     - durée (int)
@@ -82,9 +85,9 @@ const projectSchema = new Schema({
 
 const taskSchema = new Schema({
     name: { type : String, required : true },
-    note: { type : String, required : true },
-    isArchived: { type: Boolean, required: true },
-    status: { type: Number, required: true },
+    note: { type : String },
+    isArchived: { type: Boolean, required: true, default : false },
+    status: { type: Number, required: true, default : false },
     startingDate: { type : Date, required : true },
     endingDate: { type: Date, required: true },
     duration: { type: Number, required: true },

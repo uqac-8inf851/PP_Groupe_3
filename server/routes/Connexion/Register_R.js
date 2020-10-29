@@ -11,7 +11,9 @@ router.get ('/', (req, res) => {
 
 router.post('/', (req, res) => {
 
-    const newSearcher  = new Searcher (req.body)
+    console.log(req.body);
+
+    const newSearcher = new Searcher(req.body, { strict: true });
 
     newSearcher.save ( err => { 
         

@@ -4,7 +4,10 @@
   "description": "Projet pratique du cours de génie logiciel",
   "main": "server/server.js",
   "scripts": {
-    "debug": "nodemon ./server/server.js"
+    "debug": "nodemon ./server/server.js",
+    "test": "mocha ./test",
+    "pre-install": "mkdir database",
+    "db-win": "start \"MongoDB server (ne pas fermer)\" \"mongod\" --dbpath=database/"
   },
   "author": "Équipe projet pratique - Groupe 3",
   "license": "MIT",
@@ -16,6 +19,7 @@
     "mongoose": "^5.10.7"
   },
   "devDependencies": {
+    "mocha": "^8.2.0",
     "nodemon": "^2.0.5"
   }
 }

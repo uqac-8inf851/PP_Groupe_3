@@ -10,7 +10,7 @@ const Searcher = require("./class/Models/Models").Searcher
 
 /* Middleware */
 const app = express();
-app.use(express.static('../Public' ));
+app.use(express.static('./Public' ));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -24,7 +24,7 @@ app.use(
   }))
 
 app.engine('html', require('ejs').renderFile);
-app.set('views', '../Public/views');
+app.set('views', './Public/views');
 app.set('view engine', 'ejs');
 
 const PORT  = 5500;
@@ -43,15 +43,17 @@ var server = app.listen(PORT,'localhost',() => {
 
 var Login =  require("./routes/Connexion/Login_R");
 var Register =  require("./routes/Connexion/Register_R");
+var Tache = require("./routes/Taches/Tache_R");
 
 /* Routes */
 app.use('/Login', Login);
 app.use('/Register', Register);
+app.use('/Tache', Tache);
 
 // Login Middleware
 app.get('*',(req, res, next) => {
 
-    if (!(req.session && req.session.userId)) return res.redirect('/Login')
+    if (!(req.session && req.session.searcherId)) return res.redirect('/Login')
 
     Searcher.findById(req.session.searcherId, (err, searcher) => {
 
