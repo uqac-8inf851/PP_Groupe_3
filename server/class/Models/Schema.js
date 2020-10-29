@@ -15,6 +15,7 @@ const { Schema } = mongoose;
 //     - tâches (id[] #Tâche)
 
 const searcherSchema = new Schema({
+    _id: { type: mongoose.Types.ObjectId, auto: true},
     name: { type : String, required : true },
     email: { type : String, required : true, unique : true },
     password: { type : String, required : true },
@@ -34,12 +35,13 @@ const searcherSchema = new Schema({
 //     - projets (id[] #Projet)
 
 const programSchema = new Schema({
+    _id: { type: mongoose.Types.ObjectId, auto: true },
     name: { type : String, required : true },
-    description: { type : String, required : true },
-    isArchived: { type: Boolean, required: true },
-    administrator: { type: Schema.Types.ObjectId, required: true },
-    searchers: { type: [Schema.Types.ObjectId], required: true },
-    projects: { type: [Schema.Types.ObjectId], required: true },
+    description: { type : String},
+    isArchived: { type: Boolean},
+    administrator: { type: Schema.Types.ObjectId, required : true},
+    searchers: { type: [Schema.Types.ObjectId]},
+    projects: { type: [Schema.Types.ObjectId]},
 });
 
 {
@@ -56,6 +58,7 @@ const programSchema = new Schema({
 //     - référence programme (id #Programme)
 
 const projectSchema = new Schema({
+    _id: { type: mongoose.Types.ObjectId, auto: true },
     name: { type : String, required : true },
     description: { type : String, required : true },
     isArchived: { type: Boolean, required: true },
@@ -81,6 +84,7 @@ const projectSchema = new Schema({
 //     - référence projet (id #Projet)
 
 const taskSchema = new Schema({
+    _id: { type: mongoose.Types.ObjectId, auto: true },
     name: { type : String, required : true },
     note: { type : String, required : true },
     isArchived: { type: Boolean, required: true },
@@ -103,6 +107,7 @@ const taskSchema = new Schema({
 //     - référence tâche (id #Tâche)
 
 const advancementSchema = new Schema({
+    _id: { type: mongoose.Types.ObjectId, auto: true },
     startingDate: { type : Date, required : true },
     endingDate: { type : Date, required : true },
     searcher: { type: Schema.Types.ObjectId, required: true },
