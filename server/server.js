@@ -1,12 +1,19 @@
 /* Modules */
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require("path");
 const sessions = require("client-sessions");
-const mongoose = require('mongoose');
 
 const ConnexionBDMongo = require('./class/Models/ConnexionBDMongo');
-const Searcher = require("./class/Models/Models").Searcher
+const { Searcher } = require("./class/Models/Models");
+
+const {
+    Login,
+    Register,
+    Programme,
+    Tache
+} = require("./routes");
+
+const PORT  = 5500;
 
 /* Middleware */
 const app = express();
@@ -27,42 +34,32 @@ app.engine('html', require('ejs').renderFile);
 app.set('views', './Public/views');
 app.set('view engine', 'ejs');
 
-const PORT  = 5500;
-
-/* Serveur Start */
-var server = app.listen(PORT,'localhost',() => {
-
-    console.log(`Serveur Running on : http://localhost:${PORT}`)
-
-    ConnexionBDMongo.getInstance()
-    
-
-});
-
-
-
-var Login =  require("./routes/Connexion/Login_R");
-var Register =  require("./routes/Connexion/Register_R");
-var Tache = require("./routes/Taches/Tache_R");
 
 /* Routes */
 app.use('/Login', Login);
 app.use('/Register', Register);
+app.use('/Programme', Programme);
 app.use('/Tache', Tache);
 
 // Login Middleware
-app.get('*',(req, res, next) => {
+app.get('*', (req, res, next) => {
 
     if (!(req.session && req.session.searcherId)) return res.redirect('/Login')
 
     Searcher.findById(req.session.searcherId, (err, searcher) => {
 
-        if (err) { console.log(err); return res.redirect('/Login') } 
+        if (err) { console.error(err); return res.redirect('/Login'); }
 
-        if ( !searcher) { return res.redirect('/Login') }
+        if (!searcher) { return res.redirect('/Login'); }
 
-        next()
-    })  
-})
+        next();
+    })
+});
 
+/* Serveur Start */
+const server = app.listen(PORT,'localhost',() => {
 
+    console.log(`Serveur Running on : http://localhost:${PORT}`)
+
+    ConnexionBDMongo.getInstance();
+});
