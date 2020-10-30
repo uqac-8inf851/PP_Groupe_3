@@ -17,7 +17,7 @@ router.post('/', (req, res) => {
 
         req.session.searcherId = searcher._id
 
-        res.render('Tmp.ejs') // A changer vers Main page avec Redirect
+       res.redirect("/Programmes")
     } )
 
 });

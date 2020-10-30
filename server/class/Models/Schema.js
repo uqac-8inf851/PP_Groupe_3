@@ -15,6 +15,7 @@ const { Schema } = mongoose;
 //     - tâches (id[] #Tâche)
 
 const searcherSchema = new Schema({
+    _id: { type: mongoose.Schema.Types.ObjectId, auto :true },
     name: { type : String, required : true },
     email: { type : String, required : true, unique : true },
     password: { type : String, required : true },
@@ -22,7 +23,7 @@ const searcherSchema = new Schema({
     programs: [Schema.Types.ObjectId],
     projects: [Schema.Types.ObjectId],
     tasks: [Schema.Types.ObjectId]
-});
+}, {strict : true});
 
 // Programme :
 //     - id (unique string)
@@ -34,13 +35,14 @@ const searcherSchema = new Schema({
 //     - projets (id[] #Projet)
 
 const programSchema = new Schema({
+    _id: { type: mongoose.Schema.Types.ObjectId, auto: true },
     name: { type : String, required : true },
-    description: { type : String, required : true },
-    isArchived: { type: Boolean, required: true },
-    administrator: { type: Schema.Types.ObjectId, required: true },
-    searchers: { type: [Schema.Types.ObjectId], required: true },
-    projects: { type: [Schema.Types.ObjectId], required: true },
-});
+    description: { type : String},
+    isArchived: { type: Boolean},
+    administrator: { type: Schema.Types.ObjectId, required : true},
+    searchers: { type: [Schema.Types.ObjectId], required: true},
+    projects: { type: [Schema.Types.ObjectId]},
+},{strict : true});
 
 {
 
@@ -56,13 +58,14 @@ const programSchema = new Schema({
 //     - référence programme (id #Programme)
 
 const projectSchema = new Schema({
+    _id: { type: mongoose.Types.ObjectId, auto: true },
     name: { type : String, required : true },
     description: { type : String, required : true },
     isArchived: { type: Boolean, required: true },
     searchers: { type: [Schema.Types.ObjectId], required: true },
     tasks: { type: [Schema.Types.ObjectId], required: true },
     programRef : { type: [Schema.Types.ObjectId], required: true }
-});
+}, {strict : true} );
 
 // Tâche :
 //     - id (unique string)
@@ -84,6 +87,7 @@ const projectSchema = new Schema({
 //     - référence projet (id #Projet)
 
 const taskSchema = new Schema({
+    _id: { type: mongoose.Types.ObjectId, auto: true },
     name: { type : String, required : true },
     note: { type : String },
     isArchived: { type: Boolean, required: true, default : false },
@@ -97,7 +101,7 @@ const taskSchema = new Schema({
     advancements: { type: [Schema.Types.ObjectId], required: true },
     subTasks: { type: [Schema.Types.ObjectId], required: true },
     projectRef : { type: Schema.Types.ObjectId, required: true }
-});
+}, {strict : true} );
 
 // Avancement :
 //     - début (date)
@@ -106,11 +110,12 @@ const taskSchema = new Schema({
 //     - référence tâche (id #Tâche)
 
 const advancementSchema = new Schema({
+    _id: { type: mongoose.Types.ObjectId, auto: true },
     startingDate: { type : Date, required : true },
     endingDate: { type : Date, required : true },
     searcher: { type: Schema.Types.ObjectId, required: true },
     taskRef: { type: Schema.Types.ObjectId, required: true },
-});
+}, {strict : true} );
 
 module.exports = {
     searcherSchema,
