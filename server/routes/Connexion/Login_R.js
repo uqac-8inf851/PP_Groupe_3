@@ -1,6 +1,7 @@
 var express = require('express');
 
 const Searcher = require('../../class/Models/Models').Searcher
+const SearcherDAO = require ("../../class/Models/SearcherDAO")
 
 var router = express.Router();
 
@@ -11,14 +12,15 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
 
-    Searcher.findOne( {email : req.body.email }, (err, searcher) => {
+    let SearchDAO = new SearcherDAO(req)
 
-        if (err || !searcher || req.body.password !== searcher.password ) return res.redirect ('/Login')
+    SearchDAO.findById().then ( (status) => {
 
-        req.session.searcherId = searcher._id
+        if (!status) return res.redirect ('/Login')
 
-       res.redirect("/Programmes")
-    } )
+        return res.redirect('/Programmes')
+
+    }).catch ( e => console.log(e))
 
 });
 
