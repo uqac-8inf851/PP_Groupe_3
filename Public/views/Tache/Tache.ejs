@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title><%= "Tâche " + name %></title>
+    </head>
+    <body>
+        <div class="container">
+            <ul>
+                <li>Nom tâche : <%= name %></li>
+                <li>Notes : <%= note %></li>
+                <li>Est archivée : <%= isArchived ? "oui" : "non" %></li>
+                <li>Status : <%= status === 0 ? "En cours" : status === 1 ? " Finie" : status === 2 ? " En attente" : "undefined"  %></li>
+                <li>Date de début : <%= startingDate || "aucune" %></li>
+                <li>Date de fin : <%= endingDate || "aucune" %></li>
+                <li>Durée de la tâche : <%= duration !== null ? (duration / 1000 / 3600) : "N/A" %>h</li>
+                <li>Durée déjà faite : <%= duration !== null ? (elapsedDuration / 1000 / 3600) : "N/A" %>h</li>
+                <li>Priorité : <%= priority %></li>
+                <li>Équipe de recherche : <%= searchers.join(', ') || "aucun" %></li>
+                <li>Avancements : <%= advancements.join(', ') || "aucun" %></li>
+                <li>Sous-tâches : <%= subTasks.join(', ') || "aucune" %></li>
+            </ul>
+        </div>
+
+        <br><br><br>
+
+        <div>
+            <h1>Rechercher une tâche (ID)</h1>		
+            <label for="taskId">Id de la tâche</label>
+            <input id="taskId" name="taskId" type="text"/>
+            <input type="button" value="Chercher" onclick="test()" />
+        </div>
+            <script>
+                function test() {
+                    window.location = `/Tache/Read/${document.getElementById('taskId').value}`;
+                }
+            </script>
+    </body>
+</html>

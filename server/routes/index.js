@@ -3,7 +3,7 @@ const Register = require('./Connexion/Register_R');
 
 const Programme = require('./Programme/Programme_R');
 
-const Tache = require('./Taches/Tache_R');
+const Tache = require('./Tache/Tache_R');
 
 module.exports = {
     Login,

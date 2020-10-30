@@ -17,7 +17,7 @@ Ce répertoire contient les sources pour le projet pratique du cours de Génie L
 
 ### Lancement du projet
 
-1. Lancer la base de donnée MongoDB (avec la commande `mongod --dbpath=database/` lancée depuis la racine du serveur **ou** en lançant l'executable depuis le dossier *bin* de MongoDB)
+1. Lancer la base de donnée MongoDB (avec la commande `mongod` **ou** en lançant l'executable depuis le dossier *bin* de MongoDB)
 1. Lancer le serveur NodeJS en executant la commande `npm run debug` depuis la racine du projet
 1. Ouvrez votre navigateur à l'adresse indiquer par les logs de votre console ayant lancée le programme (normalement *http://localhost:5500/*)
 

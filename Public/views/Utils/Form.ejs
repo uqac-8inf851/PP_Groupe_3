@@ -7,11 +7,11 @@
 
     <body>
         <div class="container">
-            <h1><a><%= title %></a></h1>		
-            <form id="my_form" method="post" action="<%= action %>">
+            <h1><%= title %></h1>		
+            <form id="my_form" method="POST" action="<%= action %>">
                 <%for (var input of inputs) { %>
                     <label for="<%= input.id %>"><%= input.name %></label>
-                    <input id="<%= input.id %>" name="<%= input.id %>" type="<%= (input.type !== null ? input.type : text) %>"/>
+                    <input id="<%= input.id %>" name="<%= input.id %>" type="<%= (input.type !== null ? input.type : "text") %>" value="<%= (input.value !== null ? input.value : null) %>" />
                     <br />
                 <% } %>
                 <input type="submit" name="submit" value="Valider" />
