@@ -17,7 +17,7 @@ const { Schema } = mongoose;
 const searcherSchema = new Schema({
     _id: { type: mongoose.Schema.Types.ObjectId, auto :true },
     name: { type : String, required : true },
-    email: { type : String, required : true, unique : true },
+    email: { type : String, required : true, unique : true , index :true},
     password: { type : String, required : true },
     preferences: String, // obj JSON stringifié
     programs: [Schema.Types.ObjectId],

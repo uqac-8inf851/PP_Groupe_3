@@ -23,6 +23,7 @@ class SearcherDAO {
 
                 res (true)
             })
+
         })
     }
 
