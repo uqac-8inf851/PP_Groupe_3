@@ -42,6 +42,8 @@ var server = app.listen(PORT,'localhost',() => {
 var Login =  require("./routes/Connexion/Login_R");
 var Register =  require("./routes/Connexion/Register_R");
 var Programme =  require("./routes/Programme/Programme_R");
+const { get } = require('http');
+const { render } = require('ejs');
 
 /* Routes */
 app.use('/Login', Login);
@@ -60,6 +62,10 @@ app.get('*',(req, res, next) => {
 
         next()
     })  
+})
+
+app.get ('/', (req, res) => {
+    res.redirect('/Programmes')
 })
 
 app.use('/Programmes', Programme);

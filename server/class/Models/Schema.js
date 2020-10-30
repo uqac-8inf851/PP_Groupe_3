@@ -40,7 +40,7 @@ const programSchema = new Schema({
     description: { type : String},
     isArchived: { type: Boolean},
     administrator: { type: Schema.Types.ObjectId, required : true},
-    searchers: { type: [Schema.Types.ObjectId]},
+    searchers: { type: [Schema.Types.ObjectId], required: true},
     projects: { type: [Schema.Types.ObjectId]},
 },{strict : true});
 

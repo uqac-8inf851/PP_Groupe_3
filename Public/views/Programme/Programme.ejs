@@ -1,6 +1,26 @@
-<form action ="/Programmes/AddSearcher" method="POST" class="box">
-    <h1>Programe</h1>
-    <input type="text" name="email" placeholder="email" required>
-    <input type="text" name="programeId" value= "5f9b1dd0d7a963f0b4ebdf77" style="display : none" required>
-    <input type="submit" name="" value="Create">
-</form>
+
+<% Programmes.forEach( (Pro) =>{%>
+
+    <p><%- Pro.name %> </p>
+    <p><%- Pro.description%></p>
+<% } ) %> 
+
+    <a href="/Programmes/Create">
+        <button>Create</button>
+    </a>
+
+       <!-- 
+        <form action ="/Programmes/AddSearcher" method="POST" class="box">
+            <h1>Programe</h1>
+            <input type="text" name="email" placeholder="email" required>
+            <input type="text" name="programeId" value= "5f9b1dd0d7a963f0b4ebdf77" style="display : none" required>
+            <input type="submit" name="" value="Create">
+        </form>
+       --> 
+
+
+
+
+
+
+

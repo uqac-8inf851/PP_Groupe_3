@@ -5,19 +5,22 @@ const Searcher = require('../../class/Models/Models').Searcher
 
 var router = express.Router();
 
+const ProgrammeView = "./Programme/Programme.ejs"
+const ProgrammeCreate = "./Programme/ProgrammeCreate.ejs"
+
 router.get ('/', (req, res) => {
 
     Programme.find( {searchers : req.session.searcherId} , (err, programmes ) => {
 
-        if (err) console.log(err)
-    })
+        if (err) {console.log(err); return res.render('index.ejs', {Programmes : [], template : ProgrammeView}) }
 
-    res.render('./Programme/Programme.ejs')
+        res.render('index.ejs', {Programmes : programmes, template : ProgrammeView })
+    })
 })
 
 router.get ('/Create', (req, res) => {
 
-    res.render('./Programme/ProgrammeCreate.ejs')
+    res.render('index.ejs',{template : ProgrammeCreate})
 })
 
 router.post('/Create', (req, res) => {
@@ -25,12 +28,12 @@ router.post('/Create', (req, res) => {
     const newPrograme  = new Programme ({
         ...req.body,
         administrator : req.session.searcherId,
-        searches: req.session.searcherId 
+        searchers: req.session.searcherId 
     })
 
     newPrograme.save ( err => { if ( err) { console.log(err) } })
 
-    res.render('./Programme/Programme.ejs')
+    res.render('index.ejs', {template : ProgrammeView})
 });
 
 router.post ('/AddSearcher', (req, res) => {
@@ -41,14 +44,12 @@ router.post ('/AddSearcher', (req, res) => {
 
         let update = { $push : {searchers : User._id}}
 
-        Programme.findByIdAndUpdate(req.body.programeId, update).then ((Pro) => {
-        
-            console.log(Pro)
-        })
+        Programme.findByIdAndUpdate(req.body.programeId, update).then ((Pro) => { })
 
         res.render('./Programme/Programme.ejs')
 
     }).catch( (e) => console.log(e) )
     
 })
+
 module.exports = router
