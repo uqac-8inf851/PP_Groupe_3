@@ -10,7 +10,7 @@ const Searcher = require("./class/Models/Models").Searcher
 
 /* Middleware */
 const app = express();
-app.use(express.static('../Public' ));
+app.use(express.static('../Public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -39,10 +39,9 @@ var server = app.listen(PORT,'localhost',() => {
 
 });
 
-
-
 var Login =  require("./routes/Connexion/Login_R");
 var Register =  require("./routes/Connexion/Register_R");
+var Programme =  require("./routes/Programme/Programme_R");
 
 /* Routes */
 app.use('/Login', Login);
@@ -51,7 +50,7 @@ app.use('/Register', Register);
 // Login Middleware
 app.get('*',(req, res, next) => {
 
-    if (!(req.session && req.session.userId)) return res.redirect('/Login')
+    if (!(req.session && req.session.searcherId)) return res.redirect('/Login')
 
     Searcher.findById(req.session.searcherId, (err, searcher) => {
 
@@ -62,5 +61,8 @@ app.get('*',(req, res, next) => {
         next()
     })  
 })
+
+app.use('/Programmes', Programme);
+
 
 
