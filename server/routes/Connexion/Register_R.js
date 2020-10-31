@@ -12,9 +12,9 @@ router.get ('/', (req, res) => {
 
 router.post('/', (req, res) => {
 
-    let SearchDAO = new SearcherDAO(req)
+    let SearchDAO = new SearcherDAO()
 
-    SearchDAO.create().then ( (status) => {
+    SearchDAO.create(req).then ( (status) => {
 
         if (!status) return res.render('./Connexion/Register.ejs')
 
