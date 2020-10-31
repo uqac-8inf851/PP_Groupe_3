@@ -34,18 +34,15 @@ var server = app.listen(PORT,'localhost',() => {
 
     console.log(`Serveur Running on : http://localhost:${PORT}`)
 
-    ConnexionBDMongo.getInstance()
-    
-
+    ConnexionBDMongo.getInstance();
 });
 
 var Login =  require("./routes/Connexion/Login_R");
-var Register =  require("./routes/Connexion/Register_R");
-var Programme =  require("./routes/Programme/Programme_R");
+var Register = require("./routes/Connexion/Register_R");
+
+var Programme = require("./routes/Programme/Programme_R");
+var Projet =  require("./routes/Projet/Projet_R");
 var Tache =  require("./routes/Tache/Tache_R");
-var TacheDev =  require("./routes/Tache/Tache_R.dev");
-const { get } = require('http');
-const { render } = require('ejs');
 
 /* Routes */
 app.use('/Login', Login);
@@ -62,7 +59,7 @@ app.get('*',(req, res, next) => {
 
         if ( !searcher) { return res.redirect('/Login') }
 
-        next()
+        next();
     })  
 })
 
@@ -71,5 +68,5 @@ app.get ('/', (req, res) => {
 })
 
 app.use('/Programmes', Programme);
+app.use('/Projet', Projet);
 app.use('/Tache', Tache);
-app.use('/Tache', TacheDev);
