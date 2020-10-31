@@ -43,8 +43,7 @@ var Login =  require("./routes/Connexion/Login_R");
 var Register =  require("./routes/Connexion/Register_R");
 var Tache =  require("./routes/Tache/Tache_R");
 var TacheDev =  require("./routes/Tache/Tache_R.dev");
-const { get } = require('http');
-const { render } = require('ejs');
+var Programme = require ("./routes/Programme/Programme_R")
 
 /* Routes */
 app.use('/Login', Login);
