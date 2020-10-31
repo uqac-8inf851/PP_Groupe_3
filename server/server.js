@@ -10,7 +10,7 @@ const Searcher = require("./class/Models/Models").Searcher
 
 /* Middleware */
 const app = express();
-app.use(express.static('../Public'));
+app.use(express.static('./Public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -24,7 +24,7 @@ app.use(
   }))
 
 app.engine('html', require('ejs').renderFile);
-app.set('views', '../Public/views');
+app.set('views', './Public/views');
 app.set('view engine', 'ejs');
 
 const PORT  = 5500;
@@ -42,6 +42,8 @@ var server = app.listen(PORT,'localhost',() => {
 var Login =  require("./routes/Connexion/Login_R");
 var Register =  require("./routes/Connexion/Register_R");
 var Programme =  require("./routes/Programme/Programme_R");
+var Tache =  require("./routes/Tache/Tache_R");
+var TacheDev =  require("./routes/Tache/Tache_R.dev");
 const { get } = require('http');
 const { render } = require('ejs');
 
@@ -69,6 +71,5 @@ app.get ('/', (req, res) => {
 })
 
 app.use('/Programmes', Programme);
-
-
-
+app.use('/Tache', Tache);
+app.use('/Tache', TacheDev);

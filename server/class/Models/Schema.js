@@ -22,9 +22,9 @@ const searcherSchema = new Schema({
     email: { type : String, required : true, unique : true , index :true},
     password: { type : String, required : true },
     preferences: String, // obj JSON stringifié
-    programs: [{type : Schema.Types.ObjectId, ref :'Program'}],
-    projects: [{type : Schema.Types.ObjectId, ref :'Project'}],
-    tasks: [{type : Schema.Types.ObjectId, ref :'Task'}]
+    programs: [{type : Schema.Types.ObjectId, required : true, ref :'Program'}],
+    projects: [{type : Schema.Types.ObjectId, required : true, ref :'Project'}],
+    tasks: [{type : Schema.Types.ObjectId, required : true, ref :'Task'}]
 }, {strict : true});
 
 // Programme :
@@ -41,10 +41,10 @@ const programSchema = new Schema({
     name: { type : String, required : true },
     description: { type : String},
     isArchived: { type: Boolean},
-    administrator: { type: Schema.Types.ObjectId, required : true, ref : 'Searcher'},
-    searchers: [{ type: Schema.Types.ObjectId, ref : 'Searcher'}],
-    projects: [{ type: Schema.Types.ObjectId, ref : 'Project'}],
-},{strict : true})
+    administrator: { type: Schema.Types.ObjectId, required : true, ref: 'Searcher'},
+    searchers: [{ type: Schema.Types.ObjectId, required: true, ref: 'Searcher'}],
+    projects: [{ type: Schema.Types.ObjectId, required: true, ref: 'Project'}],
+},{strict : true});
 
 // Projets :
 //     - id (unique string)
@@ -58,11 +58,11 @@ const programSchema = new Schema({
 const projectSchema = new Schema({
     _id: { type: mongoose.Types.ObjectId, auto: true },
     name: { type : String, required : true },
-    description: { type : String},
-    isArchived: { type: Boolean},
-    searchers: [{ type: Schema.Types.ObjectId, ref : 'Searcher'}],
-    tasks: [{type : Schema.Types.ObjectId, ref :'Task'}],
-    programRef : [{type : Schema.Types.ObjectId, required : true ,ref :'Program'}]
+    description: { type : String },
+    isArchived: { type: Boolean, required: true },
+    searchers: [{ type: Schema.Types.ObjectId, required: true, ref: 'Searcher' }],
+    tasks: [{ type: Schema.Types.ObjectId, required: true, ref: 'Task' }],
+    programRef : [{ type: Schema.Types.ObjectId, required: true, ref: 'Program' }]
 }, {strict : true} );
 
 
@@ -72,6 +72,9 @@ const projectSchema = new Schema({
 //     - notes (string)
 //     - est archivé (boolean)
 //     - status (int -> enum)
+//          - 0 : en cours
+//          - 1 : finie
+//          - 2 : en attente
 //     - date début (date)
 //     - date fin (date)
 //     - durée (int)
@@ -88,11 +91,11 @@ const taskSchema = new Schema({
     note: { type : String},
     isArchived: { type: Boolean},
     status: { type: Number},
-    startingDate: { type : Date, required : true },
+    startingDate: { type : Date },
     endingDate: { type: Date},
     duration: { type: Number},
     elapsedDuration: { type: Number},
-    priority: { type: Number},
+    priority: { type: Number, required: true},
     searchers: [{ type: Schema.Types.ObjectId, ref : 'Searcher'}],
     advancements: [{ type: Schema.Types.ObjectId, ref : 'Advancement'}],
     subTasks: [{type : Schema.Types.ObjectId, ref :'Task'}],
