@@ -35,7 +35,7 @@ class TaskDAO {
             task.save(err => {
                 if (err) return reject(err);
                 
-                // Project.updateOne({ _id: task.projectRef }, { $push: { tasks: task._id } });
+                Project.updateOne({ _id: task.projectRef }, { $push: { tasks: task._id } }, (err) => { if(err) console.error(err)});
                 Searcher.updateOne({ _id: searcherId }, { $push: { tasks: task._id } }, (err) => { if(err) console.error(err)});
                 
                 resolve(task);
@@ -72,16 +72,34 @@ class TaskDAO {
             }
         });
     }
+    
+    addSearcherToTask(email, taskId) {
+        return new Promise(async (resolve, reject) => {
+            Searcher.findOneAndUpdate({ email : email },{ $push: { tasks: taskId } }, (err, searcher) => { 
+        
+                if (err) return reject(err);
+                if (!searcher) return reject("Une erreur est survenue à l'ajout du chercheur à la tâche");
+
+                Task.findByIdAndUpdate(taskId, { $push: { searchers: searcher._id } }, (err, project) => {
+                    if (err) return reject(err);
+                    if (!searcher) return reject("Une erreur est survenue à l'ajout du chercheur à la tâche");
+
+                    resolve();
+                });
+            })
+        });
+    }
 
     deleteById (id) {
         return new Promise((resolve, reject) => {
-            Task.deleteOne({ _id: id }, function (err) {
+
+            Task.findByIdAndDelete(id, function (err, task) {
                 if (err) return reject(err);
                 
                 // supprimer la tâche partout
                 Searcher.updateMany({ tasks: id }, { $pull: { tasks: id } }, (err) => { if(err) console.error(err)});
                 Advancement.deleteMany({ taskRef: id }, (err) => { if (err) console.error(err) });
-                // Project.updateOne({ _id: task.projectRef }, { $pull: { tasks: task._id } }, (err) => { if(err) console.error(err)});
+                Project.updateOne({ _id: task.projectRef }, { $pull: { tasks: id } }, (err) => { if(err) console.error(err)});
 
                 resolve();
             });
@@ -89,6 +107,7 @@ class TaskDAO {
     }
 
     deleteByIds(arrayId) {
+        console.log("on veut supprimer des tasks", arrayId);
         var promises = [];
 
         for (const id of arrayId) {
@@ -97,8 +116,6 @@ class TaskDAO {
 
         return Promise.all(promises);
     }
-
-    // addAdvancement(taskId, )
 }
 
 module.exports = TaskDAO;
