@@ -98,7 +98,7 @@ class TaskDAO {
         return Promise.all(promises);
     }
 
-    addAdvancement(taskId, )
+    // addAdvancement(taskId, )
 }
 
 module.exports = TaskDAO;
