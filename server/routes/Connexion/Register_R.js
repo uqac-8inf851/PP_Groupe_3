@@ -1,6 +1,7 @@
 var express = require('express');
 
 const Searcher = require('../../class/Models/Models').Searcher
+const SearcherDAO = require ("../../class/Models/SearcherDAO")
 
 var router = express.Router();
 
@@ -11,22 +12,16 @@ router.get ('/', (req, res) => {
 
 router.post('/', (req, res) => {
 
-    console.log(req.body);
+    let SearchDAO = new SearcherDAO(req)
 
-    const newSearcher = new Searcher(req.body);
+    SearchDAO.create().then ( (status) => {
 
-    newSearcher.save ( err => { 
-        
-        if ( err) { console.log(err) 
+        if (!status) return res.render('./Connexion/Register.ejs')
 
-            let error = "Error Please try again"
+        res.redirect('/Login')
 
-            if ( err.code == 11000) { error = "That email is already taken, please try again"}
+    }).catch ( e => console.log(e) )
 
-            return res.render('./Connexion/Register.ejs')
-        }
-        res.render('./Connexion/Register.ejs');
-    })
 });
 
-module.exports = router;
+module.exports = router

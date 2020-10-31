@@ -1,21 +1,25 @@
 var express = require('express');
 
-const Programme = require('../../class/Models/Models').Program
-const Searcher = require('../../class/Models/Models').Searcher
+const ProgrammeDAO = require ('../../class/Models/ProgrammeDAO')
 
 var router = express.Router();
 
 const ProgrammeView = "./Programme/Programme.ejs"
+
 const ProgrammeCreate = "./Programme/ProgrammeCreate.ejs"
 
 router.get ('/', (req, res) => {
 
-    Programme.find( {searchers : req.session.searcherId} , (err, programmes ) => {
+    let ProgDao = new ProgrammeDAO ()
 
-        if (err) {console.log(err); return res.render('index.ejs', {Programmes : [], template : ProgrammeView}) }
+    ProgDao.findAllByUserId(req.session.searcherId).then ( (results) => {
 
-        res.render('index.ejs', {Programmes : programmes, template : ProgrammeView })
-    })
+        if (results.err) return res.render('index.ejs', {template : ProgrammeView})
+       
+        res.render('index.ejs', {Programmes : results.programmes,  template : ProgrammeView})
+
+    }).catch ( e => console.log(e) )
+
 })
 
 router.get ('/Create', (req, res) => {
@@ -25,31 +29,35 @@ router.get ('/Create', (req, res) => {
 
 router.post('/Create', (req, res) => {
 
-    const newPrograme  = new Programme ({
-        ...req.body,
-        administrator : req.session.searcherId,
-        searchers: req.session.searcherId 
-    })
+    let ProgDAO = new ProgrammeDAO ()
 
-    newPrograme.save ( err => { if ( err) { console.log(err) } })
+    ProgDAO.create(req).then( (result) => { 
 
-    res.render('index.ejs', {template : ProgrammeView})
+        res.redirect('/Programmes')
+
+    }).catch ( e => console.log(e)) 
 });
 
 router.post ('/AddSearcher', (req, res) => {
 
-    Searcher.findOne({ email : req.body.email }).select('_id').then ( (User) =>{
+    let ProgDAO = new ProgrammeDAO ()
 
-        if (!User) return res.render('./Programme/Programme.ejs')
+    ProgDAO.addSearcherToProgramme(req.body.email,req.body.programeId).then ( (status) => {
 
-        let update = { $push : {searchers : User._id}}
+        return res.redirect("/Programmes")
 
-        Programme.findByIdAndUpdate(req.body.programeId, update).then ((Pro) => { })
-
-        res.render('./Programme/Programme.ejs')
-
-    }).catch( (e) => console.log(e) )
+    }).catch ( e => console.log(e) )
     
 })
 
+router.post ('/delete/:id', (req, res) => {
+
+    let ProgDao = new ProgrammeDAO ()
+
+    ProgDao.delete(req.params.id).then ( (result) => {
+        
+        res.redirect('/Programmes')
+
+    }).catch( e => console.log(e))
+})
 module.exports = router
