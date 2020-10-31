@@ -1,15 +1,50 @@
+<div class="container-fluid">
 
+    <% Programmes.forEach( (Pro) =>{%>
+    <div id="accordion">
+      <div class="card">
+        <div class="card-header" id="card-header">
+            <button class="btn btn-link card-title" data-toggle="collapse" data-target="#item-<%= Pro._id %>" aria-expanded="true">
+              <h5 class="card-title"><%= Pro.name %></h5>
+            </button>
+        </div>
+  
+        <div class="collapse show" id="item-<%= Pro._id %>"  aria-labelledby="card-head" data-parent="#accordion">
+          <div class="card-body">
+            <div class="container-fluid" style="border: 1px solid black;">
+              
+              <div class="row">
+                <div class="col">
+                <% Pro.searchers.forEach( searcher =>{%>
+                  <%= searcher._id %>
 
+                <% } ) %>
 
-<% Programmes.forEach( (Pro) =>{%>
+                <form action="/Programmes/delete/<%=Pro._id %>" method="POST">
+                    <input type="submit" value = "DELETE">
+                </form>
 
-    <p><%- Pro.name %> </p>
-    <p><%- Pro.description%></p>
-<% } ) %> 
+                <form action="Programmes/AddSearcher" method="POST">
+                 <div>Add user by email<input type="email" name="email"><input type="submit" value = "ADD"></div>  
+                 
+                  <input type="text" name="programeId" value="<%=Pro._id %>" style="display: none;" readonl> 
+              </form>
 
-    <a href="/Programmes/Create">
-        <button>Create</button>
-    </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% } ) %>
+  </div>
+  <a href="/Programmes/Create">
+    <button>Create</button>
+  </a> 
+
+  
+
 
        <!-- 
         <form action ="/Programmes/AddSearcher" method="POST" class="box">

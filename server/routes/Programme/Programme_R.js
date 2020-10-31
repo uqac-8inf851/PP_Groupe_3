@@ -1,19 +1,18 @@
 var express = require('express');
 
-const Programme = require('../../class/Models/Models').Program
-const Searcher = require('../../class/Models/Models').Searcher
 const ProgrammeDAO = require ('../../class/Models/ProgrammeDAO')
 
 var router = express.Router();
 
 const ProgrammeView = "./Programme/Programme.ejs"
+
 const ProgrammeCreate = "./Programme/ProgrammeCreate.ejs"
 
 router.get ('/', (req, res) => {
 
-    let ProgDao = new ProgrammeDAO (req)
+    let ProgDao = new ProgrammeDAO ()
 
-    ProgDao.findAllByUserId().then ( (results) => {
+    ProgDao.findAllByUserId(req.session.searcherId).then ( (results) => {
 
         if (results.err) return res.render('index.ejs', {template : ProgrammeView})
        
@@ -30,9 +29,9 @@ router.get ('/Create', (req, res) => {
 
 router.post('/Create', (req, res) => {
 
-    let ProgDAO = new ProgrammeDAO (req)
+    let ProgDAO = new ProgrammeDAO ()
 
-    ProgDAO.create().then( (result) => { console.log(result)
+    ProgDAO.create(req).then( (result) => { 
 
         res.redirect('/Programmes')
 
@@ -41,9 +40,9 @@ router.post('/Create', (req, res) => {
 
 router.post ('/AddSearcher', (req, res) => {
 
-    let ProgDAO = new ProgrammeDAO (req)
+    let ProgDAO = new ProgrammeDAO ()
 
-    ProgDAO.addSearcher().then ( (status) => {
+    ProgDAO.addSearcherToProgramme(req.body.email,req.body.programeId).then ( (status) => {
 
         return res.redirect("/Programmes")
 
@@ -51,4 +50,14 @@ router.post ('/AddSearcher', (req, res) => {
     
 })
 
+router.post ('/delete/:id', (req, res) => {
+
+    let ProgDao = new ProgrammeDAO ()
+
+    ProgDao.delete(req.params.id).then ( (result) => {
+        
+        res.redirect('/Programmes')
+
+    }).catch( e => console.log(e))
+})
 module.exports = router

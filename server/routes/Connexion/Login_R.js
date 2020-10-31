@@ -1,6 +1,5 @@
 var express = require('express');
 
-const Searcher = require('../../class/Models/Models').Searcher
 const SearcherDAO = require ("../../class/Models/SearcherDAO")
 
 var router = express.Router();
@@ -12,9 +11,9 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
 
-    let SearchDAO = new SearcherDAO(req)
+    let SearchDAO = new SearcherDAO()
 
-    SearchDAO.findById().then ( (status) => {
+    SearchDAO.ValidateConnexion(req).then ( (status) => {
 
         if (!status) return res.redirect ('/Login')
 

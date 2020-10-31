@@ -11,11 +11,11 @@ class SearcherDAO {
         this.#req = req
     }
     
-    async create() {
+    async create(req) {
 
         return new Promise ( res => {
 
-            const newSearcher  = new Searcher (this.#req.body)
+            const newSearcher  = new Searcher (req.body)
 
             newSearcher.save ( err => { 
         
@@ -35,20 +35,35 @@ class SearcherDAO {
 
     }
 
-    async findById () {
+    async ValidateConnexion (req) {
 
         return new Promise ( res => {
 
-            Searcher.findOne( {email : this.#req.body.email }, (err, searcher) => {
+            Searcher.findOne( {email : req.body.email }, (err, searcher) => {
 
-                if (err || !searcher || this.#req.body.password !== searcher.password ) return res ( false )
+                if (err || !searcher || req.body.password !== searcher.password ) return res ( false )
         
-                this.#req.session.searcherId = searcher._id
+                req.session.searcherId = searcher._id
         
                 return res (true)
             })
         })
     }
+    
+    async findNamesById (id_array) {
+
+        return new Promise ( res => {
+
+            Searcher.find().where('_id').in(id_array).select('name').exec ( (err, results) => {
+
+                if (err) res (false)
+
+                res (results)
+            })
+        })
+    }
+
+    // RemoveSearcherFromTask()
     
 }
 

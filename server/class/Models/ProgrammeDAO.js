@@ -1,4 +1,7 @@
-const Programme = require('../../class/Models/Models').Program
+const { Program } = require('./Models')
+
+const Programme =  require ('../../class/Models/Models').Program
+
 const Searcher =  require ('../../class/Models/Models').Searcher
 
 
@@ -11,19 +14,42 @@ class ProgrammeDAO {
         this.#req = req
     }
     
-    async create() {
+    async create(req) {
 
-        const newPrograme  = new Programme ({
-            ...this.#req.body,
-            administrator : this.#req.session.searcherId,
-            searchers: this.#req.session.searcherId 
-        })
+        return new Promise ( res => {
+
+            const newPrograme  = new Programme ({
+                ...req.body,
+                administrator : req.session.searcherId,
+            })
     
-        return newPrograme.save ( err => { if ( err) { console.log(err) } })
+            newPrograme.save ( (err, prog )=> { 
+                
+                if ( err) { console.log(err); return res(false) } 
+
+                prog.populate('administrator', 'email').execPopulate().then ( (prog) => {
+
+                    this.addSearcherToProgramme(prog.administrator.email, prog._id).then ( result =>{
+
+                        res (result)
+                    })
+                })
+            })
+        })
     }
 
-    delete () {
+    async delete (id) {
 
+        return new Promise (res => {
+
+            Programme.findByIdAndDelete({_id : id}).then( (err, result) => {
+
+                Searcher.updateMany( {programs : id}, {$pull : {programs : id}}).exec()
+
+                res(result)
+            })
+
+        })
     }
 
     update () {
@@ -34,30 +60,32 @@ class ProgrammeDAO {
 
     }
     
-    async findAllByUserId () {
+    async findAllByUserId (_id) {
 
         return new Promise (res => {
-        
-            Programme.find( {searchers : this.#req.session.searcherId} , (err, results ) => {
 
-                if (err) console.log(err)
-
-                res( {programmes : results, err: err})
-            })
+            Programme.find( {searchers : _id})
+            .populate('searchers','name')
+            .populate('administrator', 'name')
+            .populate('projects')
+            .exec( (err, results) => { res({programmes : results , err : err}) })
         })
     }
 
-    async addSearcher () {
+
+    async addSearcherToProgramme (email, programeId) {
 
         return new Promise (res => {
 
-            Searcher.findOne({ email : this.#req.body.email }).select('_id').then ( (User) =>{
+            let update = { $push : {programs : programeId}}
+
+            Searcher.findOneAndUpdate({ email : email },update, (err, User) => { 
         
                 if (!User) return res( false )
 
                 let update = { $push : {searchers : User._id}}
 
-                Programme.findByIdAndUpdate(this.#req.body.programeId, update).then ((Pro) => { 
+                Programme.findByIdAndUpdate(programeId, update).then ((Pro) => { 
 
                     if (!Pro) return res (false)
 
@@ -67,5 +95,6 @@ class ProgrammeDAO {
         })
     }
 }
+
 
 module.exports = ProgrammeDAO
