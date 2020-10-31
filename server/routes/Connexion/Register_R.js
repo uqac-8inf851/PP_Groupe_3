@@ -13,7 +13,7 @@ router.post('/', (req, res) => {
 
     console.log(req.body);
 
-    const newSearcher = new Searcher(req.body, { strict: true });
+    const newSearcher = new Searcher(req.body);
 
     newSearcher.save ( err => { 
         

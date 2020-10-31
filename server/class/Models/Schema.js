@@ -20,9 +20,9 @@ const searcherSchema = new Schema({
     email: { type : String, required : true, unique : true },
     password: { type : String, required : true },
     preferences: String, // obj JSON stringifié
-    programs: [Schema.Types.ObjectId],
-    projects: [Schema.Types.ObjectId],
-    tasks: [Schema.Types.ObjectId]
+    programs: [{ type : Schema.Types.ObjectId, required : true, ref: 'Searcher' }],
+    projects: [{ type : Schema.Types.ObjectId, required : true, ref: 'Project' }],
+    tasks: [{ type : Schema.Types.ObjectId, required : true, ref: 'Task' }],
 }, {strict : true});
 
 // Programme :
@@ -39,14 +39,10 @@ const programSchema = new Schema({
     name: { type : String, required : true },
     description: { type : String},
     isArchived: { type: Boolean},
-    administrator: { type: Schema.Types.ObjectId, required : true},
-    searchers: { type: [Schema.Types.ObjectId], required: true},
-    projects: { type: [Schema.Types.ObjectId]},
+    administrator: { type: Schema.Types.ObjectId, required : true, ref: 'Searcher'},
+    searchers: [{ type: Schema.Types.ObjectId, required: true, ref: 'Searcher'}],
+    projects: [{ type: Schema.Types.ObjectId, required: true, ref: 'Project'}],
 },{strict : true});
-
-{
-
-}
 
 // Projets :
 //     - id (unique string)
@@ -60,11 +56,11 @@ const programSchema = new Schema({
 const projectSchema = new Schema({
     _id: { type: mongoose.Types.ObjectId, auto: true },
     name: { type : String, required : true },
-    description: { type : String, required : true },
+    description: { type : String },
     isArchived: { type: Boolean, required: true },
-    searchers: { type: [Schema.Types.ObjectId], required: true },
-    tasks: { type: [Schema.Types.ObjectId], required: true },
-    programRef : { type: [Schema.Types.ObjectId], required: true }
+    searchers: [{ type: Schema.Types.ObjectId, required: true, ref: 'Searcher' }],
+    tasks: [{ type: Schema.Types.ObjectId, required: true, ref: 'Task' }],
+    programRef : [{ type: Schema.Types.ObjectId, required: true, ref: 'Program' }]
 }, {strict : true} );
 
 // Tâche :
@@ -92,15 +88,15 @@ const taskSchema = new Schema({
     note: { type : String },
     isArchived: { type: Boolean, required: true, default : false },
     status: { type: Number, required: true, default : false },
-    startingDate: { type : Date, required : true },
-    endingDate: { type: Date, required: true },
-    duration: { type: Number, required: true },
-    elapsedDuration: { type: Number, required: true },
+    startingDate: Date,
+    endingDate: Date,
+    duration: Number,
+    elapsedDuration: Number,
     priority: { type: Number, required: true },
-    searchers: { type: [Schema.Types.ObjectId], required: true },
-    advancements: { type: [Schema.Types.ObjectId], required: true },
-    subTasks: { type: [Schema.Types.ObjectId], required: true },
-    projectRef : { type: Schema.Types.ObjectId, required: true }
+    searchers: [{ type: Schema.Types.ObjectId, required: true, ref: 'Searcher' }],
+    advancements: { type: [], ref: 'Advancement' },
+    subTasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }],
+    projectRef : { type: Schema.Types.ObjectId, required: true, ref: 'Project' }
 }, {strict : true} );
 
 // Avancement :
@@ -113,8 +109,8 @@ const advancementSchema = new Schema({
     _id: { type: mongoose.Types.ObjectId, auto: true },
     startingDate: { type : Date, required : true },
     endingDate: { type : Date, required : true },
-    searcher: { type: Schema.Types.ObjectId, required: true },
-    taskRef: { type: Schema.Types.ObjectId, required: true },
+    searcher: { type: Schema.Types.ObjectId, required: true, ref: 'Searcher' },
+    taskRef: { type: Schema.Types.ObjectId, required: true, ref: 'Task' },
 }, {strict : true} );
 
 module.exports = {

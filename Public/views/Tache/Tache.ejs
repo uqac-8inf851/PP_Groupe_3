@@ -16,7 +16,7 @@
                 <li>Durée de la tâche : <%= duration !== null ? (duration / 1000 / 3600) : "N/A" %>h</li>
                 <li>Durée déjà faite : <%= duration !== null ? (elapsedDuration / 1000 / 3600) : "N/A" %>h</li>
                 <li>Priorité : <%= priority %></li>
-                <li>Équipe de recherche : <%= searchers.join(', ') || "aucun" %></li>
+                <li>Équipe de recherche : <%= searchers.map((searcher => searcher.name)).join(', ') || "aucun" %></li>
                 <li>Avancements : <%= advancements.join(', ') || "aucun" %></li>
                 <li>Sous-tâches : <%= subTasks.join(', ') || "aucune" %></li>
             </ul>
