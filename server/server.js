@@ -17,7 +17,7 @@ app.use(
     sessions({
         cookieName: "session",
         secret: "PPratiqueGenie",
-        duration: 5 * 60 * 10000,
+        duration: 5 * 60 * 1000,
         httpOnly: true,
         ephemeral: true,
     })
