@@ -5,7 +5,7 @@ const {
     projectSchema,
     taskSchema,
     advancementSchema
-} = require('./schema');
+} = require('./Schema');
 
 // Chercheur
 const Searcher = mongoose.model('Searcher', searcherSchema);
