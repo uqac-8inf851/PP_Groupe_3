@@ -1,8 +1,10 @@
 const { Program } = require('./Models')
 
-const Programme =  require ('../../class/Models/Models').Program
+const Programme =  require ('./Models').Program
 
-const Searcher =  require ('../../class/Models/Models').Searcher
+const Searcher =  require ('./Models').Searcher
+
+const ProjectDAO = require('./ProjetDAO')
 
 
 class ProgrammeDAO {
@@ -40,13 +42,19 @@ class ProgrammeDAO {
 
     async delete (id) {
 
-        return new Promise (res => {
+        return new Promise (async (resolve, reject) => {
 
-            Programme.findOneAndDelete({_id : id}, (err, result ) => {
+            console.log(1)
+            Programme.findOneAndDelete({_id : id}, (err, programme ) => {
                
                 Searcher.updateMany( {programs : id}, {$pull : {programs : id}}).exec()
-                // Project Todo
-                res(result)
+
+                new ProjectDAO().deleteByIds(programme.projects).then(() => {
+                    resolve();
+                })
+                .catch(err => {
+                    reject("une erreur est survenue lors de la suppression des tâches du programme");
+                });
             })
 
         })

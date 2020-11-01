@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 });
 
 // redirige vers un formulaire de création de projet
-router.get('/Create', (req, res) => {
+router.get('/Create/:projectId', (req, res) => {
 
     res.render('index.ejs', {
         template: './Utils/Form',
@@ -34,7 +34,7 @@ router.get('/Create', (req, res) => {
             { id: "endingDate", name: "Date de fin (opt.)", type: "number" },
             { id: "duration", name: "Durée (opt.) en ms.", type: "number" },
             { id: "priority", name: "priorité", type: "number" },
-            { id: "projectId", name: "Id du projet (en prendre un en bd)" }
+            { id: "projectId", value: req.params.projectId , style : "display:none;" }
         ]
     });
 });

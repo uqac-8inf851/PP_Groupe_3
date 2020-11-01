@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 });
 
 // redirige vers un formulaire de création de projet
-router.get('/Create', (req, res) => {
+router.get('/Create/:programId', (req, res) => {
 
     res.render('index.ejs', {
         template: './Utils/Form',
@@ -30,7 +30,7 @@ router.get('/Create', (req, res) => {
         inputs: [
             { id: "name", name: "Nom du projet" },
             { id: "description", name: "Description du projet" },
-            { id: "programId", name: "Id du programme (prendre un en BD)" },
+            { id: "programId", value: req.params.programId, style : "display:none;" },
         ]
     });
 });
