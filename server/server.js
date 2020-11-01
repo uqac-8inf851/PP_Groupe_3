@@ -50,6 +50,10 @@ app.use("/Programmes", Programme);
 app.use("/Projet", Projet);
 app.use("/Tache", Tache);
 
+// Doit être la dernière route
+const routeErr = require("./middleware/routeErr");
+app.use("*", routeErr);
+
 ////////////////////////////////////////////////
 /* Démarrage du serveur */
 app.listen(PORT, "localhost", () => {
