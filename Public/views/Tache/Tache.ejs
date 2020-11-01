@@ -1,0 +1,57 @@
+<div class="container-fluid">
+
+    <% Tasks.forEach( (task) =>{%>
+    <div id="accordion">
+      <div class="card">
+        <div class="card-header" id="card-header">
+            <button class="btn btn-link card-title" data-toggle="collapse" data-target="#item-<%= task._id %>" aria-expanded="true">
+              <h5 class="card-title"><%= task.name %></h5>
+              <p><%= task.note %></p>
+            </button>
+        </div>
+  
+        <div class="collapse show" id="item-<%= task._id %>"  aria-labelledby="card-head" data-parent="#accordion">
+          <div class="card-body">
+            <div class="container-fluid" style="border: 1px solid black;">
+              
+              <div class="row">
+                <div class="col">
+                
+                <div class="container">
+                    <ul>
+                        <li>Nom tâche : <%= task.name %></li>
+                        <li>Notes : <%= task.note %></li>
+                        <li>Est archivée : <%= task.isArchived ? "oui" : "non" %></li>
+                        <li>Status : <%= task.status === 0 ? "En cours" : task.status === 1 ? " Finie" : task.status === 2 ? " En attente" : "undefined"  %></li>
+                        <li>Date de début : <%= task.startingDate || "aucune" %></li>
+                        <li>Date de fin : <%= task.endingDate || "aucune" %></li>
+                        <li>Durée de la tâche : <%= task.duration !== null ? (task.duration / 1000 / 3600) + "h" : "N/A" %></li>
+                        <li>Durée déjà faite : <%= task.duration !== null ? (task.elapsedDuration / 1000 / 3600) + "h" : "N/A" %></li>
+                        <li>Priorité : <%= task.priority %></li>
+                        <li>Équipe de recherche : <%= task.searchers.map((searcher => searcher.name)).join(', ') || "aucun" %></li>
+                        <li>Avancements : <%= task.advancements.join(', ') || "aucun" %></li>
+                        <li>Sous-tâches : <%= task.subTasks.join(', ') || "aucune" %></li>
+                    </ul>
+                </div>
+
+                <form action="/Tache/Delete/<%=task._id %>" method="POST">
+                    <input type="submit" value="Supprimer la tâche">
+                </form>
+
+                <form action="Tache/AddSearcher/<%=task._id %>" method="POST">
+                    <div>Ajouter utilisateur par email<input type="email" name="email">
+                    <input type="submit" value = "Ajouter"></div> 
+                </form>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% } ) %>
+  </div>
+  <a href="/Tache/Create">
+    <button>Créer une tâche</button>
+  </a>
