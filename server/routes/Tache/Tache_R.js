@@ -42,8 +42,8 @@ router.get("/Create/:projectId", (req, res) => {
             { id: "endingDate", name: "Date de fin (opt.) - NE PAS TOUCHER EXPERIMENTAL", type: "number" },
             { id: "duration", name: "Durée (opt.) en ms.", type: "number" },
             { id: "priority", name: "priorité", type: "number" },
-            { id: "projectId", value: req.params.projectId , style : "display:none;" }
-        ]
+            { id: "projectId", value: req.params.projectId, style: "display:none;" },
+        ],
     });
 });
 

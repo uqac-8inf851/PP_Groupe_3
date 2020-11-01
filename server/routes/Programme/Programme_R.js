@@ -44,7 +44,7 @@ router.post("/Create", (req, res) => {
 
 router.post("/AddSearcher/:programId", (req, res) => {
     new ProgrammeDAO()
-        .addSearcherToProgramme(req.body.email,req.params.programId)
+        .addSearcherToProgramme(req.body.email, req.params.programId)
         .then(() => {
             return res.redirect("/Programmes");
         })
