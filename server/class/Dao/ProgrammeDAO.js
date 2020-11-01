@@ -1,5 +1,6 @@
 const { error } = require("../../utils");
 const { Program, Searcher } = require("../Models/Models");
+const ProjectDAO = require("../Dao/ProjetDAO");
 
 class ProgrammeDAO {
     create(name, description, searcherId) {
@@ -32,17 +33,32 @@ class ProgrammeDAO {
     delete(id) {
         const defaultErrorMessage = "Une erreur est survenue lors de la suppression du programme";
         return new Promise((resolve, reject) => {
-            Program.deleteOne({ _id: id }, (err) => {
+            Program.findOneAndDelete({ _id: id }, (err, programme) => {
                 if (err) return reject(error(defaultErrorMessage, err));
 
                 Searcher.updateMany({ programs: id }, { $pull: { programs: id } }, (err) => {
                     if (err) return reject(error(defaultErrorMessage, err));
 
-                    resolve();
+                    new ProjectDAO()
+                        .deleteByIds(programme.projects)
+                        .then(() => {
+                            resolve();
+                        })
+                        .catch((err) => {
+                            return reject(error(defaultErrorMessage, err));
+                        });
                 });
             });
         });
     }
+
+    // async delete(id) {
+    //     return new Promise(async (resolve, reject) => {
+    //
+
+    //         });
+    //     });
+    // }
 
     update() {}
 
