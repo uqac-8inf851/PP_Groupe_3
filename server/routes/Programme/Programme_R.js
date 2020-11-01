@@ -42,9 +42,9 @@ router.post("/Create", (req, res) => {
         });
 });
 
-router.post("/AddSearcher", (req, res) => {
+router.post("/AddSearcher/:programId", (req, res) => {
     new ProgrammeDAO()
-        .addSearcherToProgramme(req.body.email, req.body.programeId)
+        .addSearcherToProgramme(req.body.email,req.params.programId)
         .then(() => {
             return res.redirect("/Programmes");
         })
