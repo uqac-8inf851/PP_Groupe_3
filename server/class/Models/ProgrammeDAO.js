@@ -42,10 +42,10 @@ class ProgrammeDAO {
 
         return new Promise (res => {
 
-            Programme.findByIdAndDelete({_id : id}).then( (err, result) => {
-
+            Programme.findOneAndDelete({_id : id}, (err, result ) => {
+               
                 Searcher.updateMany( {programs : id}, {$pull : {programs : id}}).exec()
-
+                // Project Todo
                 res(result)
             })
 
