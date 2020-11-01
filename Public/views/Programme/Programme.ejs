@@ -45,14 +45,14 @@
                         </table>
                       </form>
 
-                      <a href="Projet/Create/<%=Pro._id %> "> <button>Add Programe</button></a>
+                      <a href="Projet/Create/<%=Pro._id %>"> <button>Ajouter un projet</button></a>
                     </div>
                     <div class="col"> <!-- Second col -->
                       <table class="table table-hover">
                         <!-- Table head -->
                         <thead>
                           <tr>
-                          <th class="th-lg">Chercheurs participant a ce programme</th>
+                          <th class="th-lg">Chercheurs participant à ce programme</th>
                         </tr>
                         </thead>
                         
@@ -67,37 +67,39 @@
                         </tbody>
                       </table>
                     </div>
-                    <div class="col"> <!-- Third col -->
-                      <table class="table table-hover">
-                        <!--Table head-->
-                        <thead>
-                          <tr>
-                            <th class="th-lg"><a>Projets</a></th>
-                            <th class="th-lg"><a>Chercheurs</a></th>
-                            <th class="th-lg"><a>Date de fin du projet</a></th>
-                          </tr>
-                        </thead>
-                        <!--Table head-->
-            
-                        <!--Table body-->
-                        <tbody>  
-                          <% Pro.searchers.forEach( searcher =>{ %>
+                    <% if(Pro.projects.length > 0) { %>
+                        <div class="col"> <!-- Third col -->
+                        <table class="table table-hover">
+                            <!--Table head-->
+                            <thead>
                             <tr>
-                              <td>**Nom du projet**</td>
-                              
-                              <td>
-                                <ul style="list-style: none; padding-inline-start: 0px;">
-                                  <% Pro.searchers.forEach( searcher =>{ %>
-                                    <li><%- searcher.name.charAt(0).toUpperCase() + searcher.name.slice(1) %></li>
-                                  <% } ) %>
-                                </ul>
-                              </td>
-                              <td>**Project dead-line**</td>
+                                <th class="th-lg"><a>Projets</a></th>
+                                <th class="th-lg"><a>Chercheurs</a></th>
+                                <!-- <th class="th-lg"><a>Date de fin du projet</a></th> -->
                             </tr>
-                          <% } ) %>
-                        </tbody>
-                      </table>
-                    </div>
+                            </thead>
+                            <!--Table head-->
+                
+                            <!--Table body-->
+                            <tbody>  
+                            <% Pro.projects.forEach( project =>{ %>
+                                <tr>
+                                <td><%= project.name %></td>
+                                
+                                <td>
+                                    <ul style="list-style: none; padding-inline-start: 0px;">
+                                    <% project.searchers.forEach( ({ name }) =>{ %>
+                                        <li><%- name.charAt(0).toUpperCase() + name.slice(1) %></li>
+                                    <% } ) %>
+                                    </ul>
+                                </td>
+                                <!-- <td>**Project dead-line**</td> -->
+                                </tr>
+                            <% } ) %>
+                            </tbody>
+                        </table>
+                        </div>
+                    <% } %> 
                 </div>
               </div>
             </div>

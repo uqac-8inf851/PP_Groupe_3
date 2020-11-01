@@ -23,7 +23,15 @@ router.get("/", (req, res) => {
 });
 
 router.get("/Create", (req, res) => {
-    res.render("index.ejs", { template: "./Programme/ProgrammeCreate" });
+    res.render("index.ejs", {
+        template: "./Utils/Form",
+        title: "Ajouter un programme",
+        action: "/Programmes/Create",
+        inputs: [
+            { id: "name", name: "Nom du programme" },
+            { id: "description", name: "Description du programme" },
+        ],
+    });
 });
 
 router.post("/Create", (req, res) => {

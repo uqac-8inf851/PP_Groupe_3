@@ -70,7 +70,10 @@ class ProgrammeDAO {
             Program.find({ searchers: id })
                 .populate("searchers", "name")
                 .populate("administrator", "name")
-                .populate("projects")
+                .populate({
+                    path: "projects",
+                    populate: { path: "searchers", select: "name" },
+                })
                 .exec((err, programmes) => {
                     if (err || !programmes) return reject(error(defaultErrorMessage, err));
 
