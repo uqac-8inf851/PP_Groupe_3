@@ -40,7 +40,7 @@ const programSchema = new Schema({
     _id: { type: mongoose.Schema.Types.ObjectId, auto: true },
     name: { type : String, required : true },
     description: { type : String},
-    isArchived: { type: Boolean},
+    isArchived: { type: Boolean, required : true, default: false},
     administrator: { type: Schema.Types.ObjectId, required : true, ref: 'Searcher'},
     searchers: [{ type: Schema.Types.ObjectId, required: true, ref: 'Searcher'}],
     projects: [{ type: Schema.Types.ObjectId, required: true, ref: 'Project'}],
@@ -59,10 +59,10 @@ const projectSchema = new Schema({
     _id: { type: mongoose.Types.ObjectId, auto: true },
     name: { type : String, required : true },
     description: { type : String },
-    isArchived: { type: Boolean, required: true },
+    isArchived: { type: Boolean, required : true, default: false},
     searchers: [{ type: Schema.Types.ObjectId, required: true, ref: 'Searcher' }],
     tasks: [{ type: Schema.Types.ObjectId, required: true, ref: 'Task' }],
-    programRef : [{ type: Schema.Types.ObjectId, required: true, ref: 'Program' }]
+    programRef : { type: Schema.Types.ObjectId, required: true, ref: 'Program' }
 }, {strict : true} );
 
 
@@ -89,7 +89,7 @@ const taskSchema = new Schema({
     _id: { type: mongoose.Types.ObjectId, auto: true },
     name: { type : String, required : true },
     note: { type : String},
-    isArchived: { type: Boolean},
+    isArchived: { type: Boolean, required : true, default: false},
     status: { type: Number},
     startingDate: { type : Date },
     endingDate: { type: Date},

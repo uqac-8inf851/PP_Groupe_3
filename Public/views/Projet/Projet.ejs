@@ -1,0 +1,60 @@
+<div class="container-fluid">
+
+    <% Projets.forEach( (project) =>{%>
+    <div id="accordion">
+      <div class="card">
+        <div class="card-header" id="card-header">
+            <button class="btn btn-link card-title" data-toggle="collapse" data-target="#item-<%= project._id %>" aria-expanded="true">
+              <h5 class="card-title"><%= project.name %></h5>
+              <p><%= project.description %></p>
+            </button>
+        </div>
+  
+        <div class="collapse show" id="item-<%= project._id %>"  aria-labelledby="card-head" data-parent="#accordion">
+          <div class="card-body">
+            <div class="container-fluid" style="border: 1px solid black;">
+              
+              <div class="row">
+                <div class="col">
+                <%= project.searchers.map(searcher => searcher.name).join(', ') %>
+
+                <form action="/Projet/Delete/<%=project._id %>" method="POST">
+                    <input type="submit" value="Supprimer le projet">
+                </form>
+
+                <form action="Projet/AddSearcher/<%=project._id %>" method="POST">
+                 <div>Ajouter utilisateur par email<input type="email" name="email">
+                 <input type="submit" value = "Ajouter"></div>  
+              </form>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% } ) %>
+  </div>
+  <a href="/Projet/Create">
+    <button>Créer un projet</button>
+  </a> 
+
+  
+
+
+       <!-- 
+        <form action ="/Programmes/AddSearcher" method="POST" class="box">
+            <h1>Programe</h1>
+            <input type="text" name="email" placeholder="email" required>
+            <input type="text" name="programeId" value= "5f9b1dd0d7a963f0b4ebdf77" style="display : none" required>
+            <input type="submit" name="" value="Create">
+        </form>
+       --> 
+
+
+
+
+
+
+
