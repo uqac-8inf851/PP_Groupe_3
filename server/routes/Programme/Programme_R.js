@@ -38,11 +38,11 @@ router.post('/Create', (req, res) => {
     }).catch ( e => console.log(e)) 
 });
 
-router.post ('/AddSearcher', (req, res) => {
+router.post ('/AddSearcher/:programId', (req, res) => {
 
     let ProgDAO = new ProgrammeDAO ()
 
-    ProgDAO.addSearcherToProgramme(req.body.email,req.body.programeId).then ( (status) => {
+    ProgDAO.addSearcherToProgramme(req.body.email,req.params.programId).then ( (status) => {
 
         return res.redirect("/Programmes")
 

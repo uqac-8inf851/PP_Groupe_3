@@ -44,7 +44,6 @@ class ProgrammeDAO {
 
         return new Promise (async (resolve, reject) => {
 
-            console.log(1)
             Programme.findOneAndDelete({_id : id}, (err, programme ) => {
                
                 Searcher.updateMany( {programs : id}, {$pull : {programs : id}}).exec()
