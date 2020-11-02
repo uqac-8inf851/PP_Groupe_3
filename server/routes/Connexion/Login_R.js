@@ -1,28 +1,27 @@
-var express = require('express');
+const express = require("express");
 
-const SearcherDAO = require ("../../class/Models/SearcherDAO")
+const SearcherDAO = require("../../class/Dao/SearcherDAO");
 
-var router = express.Router();
+const router = express.Router();
 
-router.get('/', (req, res) => {
-
-    res.render('./Connexion/Login.ejs');
+router.get("/", (req, res) => {
+    res.render("./Connexion/Login.ejs");
 });
 
-router.post('/', (req, res) => {
+router.post("/", (req, res) => {
+    const { email, password } = req.body;
 
-    let SearchDAO = new SearcherDAO()
-
-    SearchDAO.ValidateConnexion(req).then ( (status) => {
-
-        if (!status) return res.redirect ('/Login')
-
-        return res.redirect('/Programmes')
-
-    }).catch ( e => console.log(e))
-
+    new SearcherDAO()
+        .validateConnexion(email, password)
+        .then((searcherId) => {
+            req.session.searcherId = searcherId; // on ajoute l'id de l'utilisateur à sa session
+            return res.redirect("/Programmes");
+        })
+        .catch((err) => {
+            console.error(err);
+            // todo gestion des erreurs
+            return res.redirect("/Login");
+        });
 });
 
-
-module.exports = router
-
+module.exports = router;

@@ -3,9 +3,10 @@
     <form id="my_form" method="POST" action="<%= action %>">
         <%for (var input of inputs) { %>
             <label for="<%= input.id %>"><%= input.name %></label>
-            <input id="<%= input.id %>" name="<%= input.id %>" type="<%= (input.type !== null ? input.type : "text") %>" value="<%= (input.value !== null ? input.value : null) %>" />
+            <input id="<%= input.id %>" name="<%= input.id %>" type="<%= (input.type !== null ? input.type : "text") %>" value="<%= (input.value !== null ? input.value : null) %>" style= "<%= (input.style !== null ? input.style : null) %>" />
             <br />
         <% } %>
+
         <input type="submit" name="submit" value="Valider" />
     </form>
 </div>

@@ -1,0 +1,5 @@
+# Ignorer les fichiers ejs
+*.ejs
+
+# Ignorer les fichiers YAML
+*.yml

@@ -1,7 +1,10 @@
 <div class="container">
     <h1>Une erreur est survenue</h1>
-    <% if (title) { %>
-        <h3><%= title %></h3>
+    <% if (err) { %>
+        <% err.messages.forEach((message) =>{%>
+            <p style="color: red;"><%= message %></p>
+        <% } ) %>
+        <h4>Infos supplémentaires (debug)</h4>
+        <p><%= err.data %></p>	
     <% } %>
-    <p><%= message %></p>	
 </div>

@@ -1,25 +1,34 @@
 {
-  "name": "projet_recherche",
-  "version": "1.0.0",
-  "description": "Projet pratique du cours de génie logiciel",
-  "main": "server/server.js",
-  "scripts": {
-    "debug": "nodemon ./server/server.js",
-    "test": "mocha ./test",
-    "pre-install": "mkdir database",
-    "db-win": "start \"MongoDB server (ne pas fermer)\" \"mongod\" --dbpath=database/"
-  },
-  "author": "Équipe projet pratique - Groupe 3",
-  "license": "MIT",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "client-sessions": "^0.8.0",
-    "ejs": "^3.1.5",
-    "express": "^4.17.1",
-    "mongoose": "^5.10.7"
-  },
-  "devDependencies": {
-    "mocha": "^8.2.0",
-    "nodemon": "^2.0.5"
-  }
+    "name": "projet_recherche",
+    "version": "1.0.0",
+    "description": "Projet pratique du cours de génie logiciel",
+    "main": "server/server.js",
+    "scripts": {
+        "debug": "nodemon ./server/server.js",
+        "test": "mocha ./test",
+        "ready": "npm run prettier && npm run lint",
+        "lint": "eslint ./server",
+        "lint-fix": "eslint ./server --fix",
+        "prettier": "npx prettier --write .",
+        "prettier-check": "prettier --check ."
+    },
+    "author": "Équipe projet pratique - Groupe 3",
+    "license": "MIT",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.19.0",
+        "client-sessions": "^0.8.0",
+        "ejs": "^3.1.5",
+        "express": "^4.17.1",
+        "mongoose": "^5.10.7",
+        "winston": "^3.3.3"
+    },
+    "devDependencies": {
+        "babel-eslint": "^10.1.0",
+        "eslint": "^7.12.1",
+        "eslint-config-prettier": "^6.15.0",
+        "mocha": "^8.2.0",
+        "nodemon": "^2.0.5",
+        "prettier": "2.1.2"
+    }
 }
