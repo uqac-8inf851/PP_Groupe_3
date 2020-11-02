@@ -34,15 +34,18 @@ Ce répertoire contient les sources pour le projet pratique du cours de Génie L
 -   [Winston](https://github.com/winstonjs/winston) (pour le logging avec [winston-logio](https://github.com/jaakkos/winston-logio) pour l'affichage des logs en production)
 -   [Prettier](https://prettier.io/) (pour le formattage automatique du code)
 -   [ESLint](https://eslint.org/) (pour les bases du clean coding en JS)
+-   [Github Action](https://github.com/features/actions) (pour l'intégration continue)
 
-## Améliorations à faire
+## Améliorations à faire (rendu en cours)
 
 -   Système de logging
+-   Intégration continue : lint et test au push sur main et develop
+-   Test unitaires et d'intégration
+
+## Améliorations à faire (prochain rendu)
+
+-   Intégration continue : déploiement automatique au push sur main
 -   Améliorer les schémas (default, validation, etc)
 -   Vérification des paramètres côté serveur à la reception avec [express-validator](https://express-validator.github.io/docs/check-api.html)
 -   Validation des données dans les DAO (longueur, etc, ...)
 -   Piste de reflexion pour le renvoi des erreurs au front : [stackoverflow](https://stackoverflow.com/questions/52341893/form-validation-and-displaying-error-message-using-ejs)
-
-## Bugs
-
--   On peut ajouter deux fois le même chercheur à un programme, un projet ou une tâche

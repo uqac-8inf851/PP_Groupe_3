@@ -2,6 +2,9 @@ name: Continuous Integration Testing and Linting
 
 on:
   push:
+    branch:
+      - main
+      - develop
     paths:
     - 'server/**'
     - 'Public/docs/**'
