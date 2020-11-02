@@ -86,13 +86,13 @@ class ProgrammeDAO {
         const defaultErrorMessage = "Une erreur est survenue lors de l'ajout du chercheur au programme";
         const searcherNotFoundErrorMessage = "Le chercheur que vous voulez ajouter n'existe pas";
         return new Promise((resolve, reject) => {
-            const update = { $push: { programs: programeId } };
+            const update = { $addToSet: { programs: programeId } };
 
             Searcher.findOneAndUpdate({ email: email }, update, (err, searcher) => {
                 if (err) return reject(error(defaultErrorMessage, err));
                 if (!searcher) return reject(error(searcherNotFoundErrorMessage));
 
-                const update = { $push: { searchers: searcher._id } };
+                const update = { $addToSet: { searchers: searcher._id } };
 
                 Program.updateOne({ _id: programeId }, update, (err) => {
                     if (err) return reject(error(defaultErrorMessage, err));
