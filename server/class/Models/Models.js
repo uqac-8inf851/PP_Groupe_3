@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const { searcherSchema, programSchema, projectSchema, taskSchema, advancementSchema } = require("./schema");
+const { searcherSchema, programSchema, projectSchema, taskSchema, advancementSchema } = require("./Schema");
 
 // Chercheur
 const Searcher = mongoose.model("Searcher", searcherSchema);

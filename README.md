@@ -41,6 +41,7 @@ Ce répertoire contient les sources pour le projet pratique du cours de Génie L
 -   Améliorer les schémas (default, validation, etc)
 -   Vérification des paramètres côté serveur à la reception avec [express-validator](https://express-validator.github.io/docs/check-api.html)
 -   Validation des données dans les DAO (longueur, etc, ...)
+-   Piste de reflexion pour le renvoi des erreurs au front : [stackoverflow](https://stackoverflow.com/questions/52341893/form-validation-and-displaying-error-message-using-ejs)
 
 ## Bugs
 
