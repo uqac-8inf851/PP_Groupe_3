@@ -1,27 +1,18 @@
-<!DOCTYPE html>
 
-<html>
-    <head>
+  <%- include("../models/plugins.ejs")  %> 
 
+    <link href="../../css/signin.css" rel="stylesheet">
 
-    </head>
-
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card">
-                        <form action ="/Register" method="POST" class="box">
-                            <h1>Register</h1>
-                            <p class="text-muted"> Please enter your login and password!</p> 
-                            <input type="text" name="email" placeholder="Email" required> 
-                            <input type="password" name="password" placeholder="Password" autocomplete="off" required>
-                            <input type="text" name="name" placeholder="Nom" required> 
-                            <input type="submit" name="" value="Resgister">
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+  <body class="text-center">
+    <form class="form-signin" action ="/Register" method="POST" class="box">  
+        <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+        <label for="inputName" class="sr-only">Password</label>
+        <input type="text" id ="inputName" class="form-control" name="name" placeholder="Nom" required>      
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2017-2020</p>
+    </form>
+</body>
