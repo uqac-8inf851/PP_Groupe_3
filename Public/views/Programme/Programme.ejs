@@ -1,7 +1,8 @@
 <div class="container-fluid">
   <% Programmes.forEach( (Pro) =>{%>
-  <div id="accordion">
-
+    
+    
+    <div id="accordion">
     <ul style="margin-top: 20px; padding-inline-start: 0px;">
       <div class="card">
         <div class="card-header d-flex" id="card-header">
@@ -21,88 +22,86 @@
           <div class="card-body">
             <div class="container-fluid">
               <div class="row">
-                  <div class="col d-flex flex-column"> <!-- First col -->
-                    <form action="/Programmes/AddSearcher/<%=Pro._id %>" method="POST">
-                      <table class="table table-hover">
-                        <thead>
-                          <tr>
-                            <th>Ajouter un chercheur au programme</th>
-                          </tr>
-                        </thead>
-
-                        <tbody>
-                          <td>
-                            <div class="d-flex flex-column">
-                              <div class="justify-content-between">
-                                <label for="email"> Adresse email :</label>
-                                <input type="email" name="email" placeholder="email@example.com"> <!-- input field -->
-                                <input class="btn btn-sm btn-success" type="submit" value = "Ajouter"> <!-- add searcher button -->
-                                <!-- invisible program id field -->
-                              </div>
-                            </div>
-                          </td>
-                        </tbody>
-                      </table>
-                    </form>
-                  </div>
-                  <div class="col"> <!-- Second col -->
+                <div class="col d-flex flex-column"> <!-- First col -->
+                  <form action="/Programmes/AddSearcher/<%=Pro._id %>" method="POST">
                     <table class="table table-hover">
-                      <!-- Table head -->
                       <thead>
                         <tr>
-                        <th class="th-lg">Chercheurs participant à ce programme</th>
-                      </tr>
+                          <th>Ajouter un chercheur au programme</th>
+                        </tr>
                       </thead>
-                      
-                      <!-- Table body -->
+
                       <tbody>
-                        <!-- Create a new row which display searcher name for each searcher in searchers of a program -->
-                        <% Pro.searchers.forEach(searcher => { %>
-                          <tr>
-                            <td><%- searcher.name.charAt(0).toUpperCase() + searcher.name.slice(1) %></td>
-                          </tr>
-                        <% } ) %>
+                        <td>
+                          <div class="d-flex flex-column">
+                            <div class="justify-content-between">
+                              <label for="email"> Adresse email :</label>
+                              <input type="email" name="email" placeholder="email@example.com"> <!-- input field -->
+                              <input class="btn btn-sm btn-success" type="submit" value = "Ajouter"> <!-- add searcher button -->
+                              <!-- invisible program id field -->
+                            </div>
+                          </div>
+                        </td>
                       </tbody>
                     </table>
-                  </div>
-                  <% if(Pro.projects.length > 0) { %>
-                      <div class="col"> <!-- Third col -->
-                      <table class="table table-hover">
-                          <!--Table head-->
-                          <thead>
-                          <tr>
-                              <th class="th-lg"><a>Projets</a></th>
-                              <th class="th-lg"><a>Chercheurs</a></th>
-                              <!-- <th class="th-lg"><a>Date de fin du projet</a></th> -->
-                          </tr>
-                          </thead>
-                          <!--Table head-->
-              
-                          <!--Table body-->
-                          <tbody>  
-                          <% Pro.projects.forEach( project =>{ %>
-                            <tr>
-                              <td><%= project.name %></td>
-                              <td>
-                                  <ul style="list-style: none; padding-inline-start: 0px;">
-                                  <% project.searchers.forEach( ({ name }) =>{ %>
-                                      <li><%- name.charAt(0).toUpperCase() + name.slice(1) %></li>
-                                  <% } ) %>
-                                  </ul>
-                              </td>
-                            </tr>
-                          <% } ) %>
-                          
-                  <% } %>
-                  <tr>
-                            <td>
-                              <a href="Projet/Create/<%=Pro._id %>"> <input class="btn btn-sm btn-success" type="submit" value="Ajouter un projet"> </a>
-                            </td>
-                          </tr>
-                          </tbody>
-                      </table>
-                      </div>
-              </div>
+                  </form>
+                </div>
+                <div class="col"> <!-- Second col -->
+                  <table class="table table-hover">
+                    <!-- Table head -->
+                    <thead>
+                      <tr>
+                      <th class="th-lg">Chercheurs participant à ce programme</th>
+                    </tr>
+                    </thead>
+                    
+                    <!-- Table body -->
+                    <tbody>
+                      <!-- Create a new row which display searcher name for each searcher in searchers of a program -->
+                      <% Pro.searchers.forEach(searcher => { %>
+                        <tr>
+                          <td><%- searcher.name.charAt(0).toUpperCase() + searcher.name.slice(1) %></td>
+                        </tr>
+                      <% } ) %>
+                    </tbody>
+                  </table>
+                </div>
+                <% if(Pro.projects.length > 0) { %>
+                <div class="col"> <!-- Third col -->
+                  <table class="table table-hover">
+                    <!--Table head-->
+                    <thead>
+                      <tr>
+                        <th class="th-lg"><a>Projets</a></th>
+                        <th class="th-lg"><a>Chercheurs</a></th>
+                        <!-- <th class="th-lg"><a>Date de fin du projet</a></th> -->
+                      </tr>
+                    </thead>
+                    <!--Table head-->
+
+                    <!--Table body-->
+                    <tbody>  
+                      <% Pro.projects.forEach( project =>{ %>
+                        <tr>
+                          <td><%= project.name %></td>
+                          <td>
+                            <ul style="list-style: none; padding-inline-start: 0px;">
+                              <% project.searchers.forEach( ({ name }) =>{ %>
+                                <li><%- name.charAt(0).toUpperCase() + name.slice(1) %></li>
+                              <% } ) %>
+                            </ul>
+                          </td>
+                        </tr>
+                      <% } ) %>
+                <% } %>
+                      <tr>
+                        <td>
+                          <a href="Projet/Create/<%=Pro._id %>"> <input class="btn btn-sm btn-success" type="submit" value="Ajouter un projet"> </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
             </div>
           </div>
         </div>
