@@ -40,7 +40,10 @@ class ProjetDAO {
                 searcher
                     .populate({
                         path: "projects",
-                        populate: { path: "searchers", select: "name" },
+                        populate: [
+                            { path: "searchers", select: ["name", "email"] },
+                            { path: "programRef", select: "name" },
+                        ],
                     })
                     .execPopulate((err, searcherPopulate) => {
                         if (err || !searcherPopulate) return reject(error(defaultErrorMessage, err));
@@ -94,11 +97,11 @@ class ProjetDAO {
         const defaultErrorMessage = "Une erreur est survenue lors de l'ajout du chercheur au projet";
         const searcherNotFoundErrorMessage = "Le chercheur que vous voulez ajouter n'existe pas";
         return new Promise((resolve, reject) => {
-            Searcher.findOneAndUpdate({ email: email }, { $push: { projects: projectId } }, (err, searcher) => {
+            Searcher.findOneAndUpdate({ email: email }, { $addToSet: { projects: projectId } }, (err, searcher) => {
                 if (err) return reject(error(defaultErrorMessage, err));
                 if (!searcher) return reject(error(searcherNotFoundErrorMessage));
 
-                Project.updateOne({ _id: projectId }, { $push: { searchers: searcher._id } }, (err) => {
+                Project.updateOne({ _id: projectId }, { $addToSet: { searchers: searcher._id } }, (err) => {
                     if (err) return reject(error(defaultErrorMessage, err));
 
                     resolve();

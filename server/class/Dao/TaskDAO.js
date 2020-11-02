@@ -74,11 +74,11 @@ class TaskDAO {
         const defaultErrorMessage = "Une erreur est survenue à l'ajout du chercheur à la tâche";
         const searcherNotFoundErrorMessage = "Le chercheur que vous voulez ajouter n'existe pas";
         return new Promise((resolve, reject) => {
-            Searcher.findOneAndUpdate({ email: email }, { $push: { tasks: taskId } }, (err, searcher) => {
+            Searcher.findOneAndUpdate({ email: email }, { $addToSet: { tasks: taskId } }, (err, searcher) => {
                 if (err) return reject(error(defaultErrorMessage, err));
                 if (!searcher) return reject(error(searcherNotFoundErrorMessage));
 
-                Task.updateOne({ _id: taskId }, { $push: { searchers: searcher._id } }, (err) => {
+                Task.updateOne({ _id: taskId }, { $addToSet: { searchers: searcher._id } }, (err) => {
                     if (err) return reject(error(defaultErrorMessage, err));
                     resolve();
                 });
