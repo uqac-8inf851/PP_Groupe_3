@@ -1,8 +1,8 @@
 <%- include("../models/plugins.ejs")  %>
-<head>
+
     <link href="../../css/signin.css" rel="stylesheet">
-</head>
-<body class="text-center container">
+
+<body class="text-center container" style="flex-flow: column;">
     <form class="form-signin" action ="/Login" method="POST" class="box">
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
         <label for="inputEmail" class="sr-only">Email address</label>
@@ -13,4 +13,6 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         <p class="mt-5 mb-3 text-muted">&copy; 2017-2020</p>
     </form>
+
+    <a href="/Register"> <button class="btn btn-lg btn-primary btn-block"> Register</button></a>
 </body>
