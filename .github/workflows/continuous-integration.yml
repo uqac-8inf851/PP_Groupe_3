@@ -2,7 +2,7 @@ name: Continuous Integration Testing and Linting
 
 on:
   push:
-    branch:
+    branches:
       - main
       - develop
     paths:
