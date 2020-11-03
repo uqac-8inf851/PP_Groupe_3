@@ -1,9 +1,10 @@
-class ConnexionPropertiesDB {
-    static database = "PPratiqueGenie";
+// propriété de configuration de la base de données
 
-    static url = "mongodb://localhost:27017/";
-
-    static options = {
+module.exports = {
+    url: "mongodb://localhost:27017/",
+    prod_database: "PPratiqueGenie",
+    test_database: "PPratiqueGenie_Test",
+    options: {
         useNewUrlParser: true,
         useCreateIndex: true, // unique id so dont duplicate
         useUnifiedTopology: true,
@@ -13,7 +14,5 @@ class ConnexionPropertiesDB {
         serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
         socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
         family: 4, // Use IPv4, skip trying IPv6
-    };
-}
-
-module.exports = ConnexionPropertiesDB;
+    },
+};

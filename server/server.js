@@ -3,12 +3,17 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const sessions = require("client-sessions");
 
-const ConnexionBDMongo = require("./class/Database/ConnexionBDMongo");
+const connectDB = require("./config/database/db");
+
 const PORT = 5500;
 
-////////////////////////////////////////////////
-/* Initialisation du serveur et des middlewares */
+// création de l'app
 const app = express();
+
+// connexion à la BD
+connectDB();
+
+// Initialisation des middlewares
 app.use(express.static("./Public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
