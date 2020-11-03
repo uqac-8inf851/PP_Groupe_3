@@ -5,30 +5,35 @@
     "main": "server/server.js",
     "scripts": {
         "debug": "nodemon ./server/server.js",
-        "test": "mocha ./test",
-        "ready": "npm run prettier && npm run lint",
+        "test": "cross-env NODE_ENV=test nyc --reporter=text-summary mocha ./tests/**/*.js --exit --timeout=6000",
+        "ready": "npm run lint && npm run test",
         "lint": "eslint ./server",
-        "lint-fix": "eslint ./server --fix",
         "prettier": "npx prettier --write .",
-        "prettier-check": "prettier --check ."
+        "prettier-check": "prettier --check .",
+        "coverage": "cross-env NODE_ENV=test nyc --reporter=text --reporter=html mocha ./tests/**/*.js --exit --timeout=6000"
     },
     "author": "Équipe projet pratique - Groupe 3",
     "license": "MIT",
     "dependencies": {
         "bcryptjs": "^2.4.3",
         "body-parser": "^1.19.0",
+        "chai": "^4.2.0",
+        "chai-http": "^4.3.0",
         "client-sessions": "^0.8.0",
         "ejs": "^3.1.5",
         "express": "^4.17.1",
+        "mocha": "^8.2.1",
         "mongoose": "^5.10.7",
         "winston": "^3.3.3"
     },
     "devDependencies": {
         "babel-eslint": "^10.1.0",
+        "cross-env": "^7.0.2",
         "eslint": "^7.12.1",
         "eslint-config-prettier": "^6.15.0",
-        "mocha": "^8.2.0",
         "nodemon": "^2.0.5",
-        "prettier": "2.1.2"
+        "nyc": "^15.1.0",
+        "prettier": "2.1.2",
+        "supertest": "^6.0.0"
     }
 }
