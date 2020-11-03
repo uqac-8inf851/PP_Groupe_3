@@ -21,12 +21,12 @@ class TaskDAO {
             }
 
             if (startingDate !== null && startingDate !== "") {
-                data.startingDate = new Date(Number(startingDate));
+                data.startingDate = new Date(startingDate);
                 data.elapsedDuration = 0;
             }
 
             if (endingDate !== null && endingDate !== "") {
-                data.endingDate = new Date(Number(endingDate));
+                data.endingDate = new Date(endingDate);
                 data.elapsedDuration = 0;
             }
 
@@ -87,7 +87,7 @@ class TaskDAO {
     }
 
     deleteById(id) {
-        const defaultErrorMessage = "Une erreur est survenue lors de la suppression du programme";
+        const defaultErrorMessage = "Une erreur est survenue lors de la suppression de votre tâche";
         return new Promise((resolve, reject) => {
             Task.findByIdAndDelete(id, function (err, task) {
                 if (err || !task) return reject(error(defaultErrorMessage, err));
