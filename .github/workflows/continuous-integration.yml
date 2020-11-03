@@ -7,7 +7,6 @@ on:
       - develop
     paths:
     - 'server/**'
-    - 'Public/docs/**'
     - 'test/**'
        
 jobs:

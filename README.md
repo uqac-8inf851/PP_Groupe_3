@@ -55,3 +55,5 @@ Ce répertoire contient les sources pour le projet pratique du cours de Génie L
 -   Validation des données dans les DAO (longueur, etc, ...)
 -   Piste de reflexion pour le renvoi des erreurs au front : [stackoverflow](https://stackoverflow.com/questions/52341893/form-validation-and-displaying-error-message-using-ejs)
 -   Gestion des permissions (seul l'admin du program peut supprimer le programme)
+-   Améliorer le routing, les redirections et le système d'erreur
+-   Faire les tests pour les DAO
