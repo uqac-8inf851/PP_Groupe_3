@@ -8,7 +8,6 @@ class SearcherDAO {
         return new Promise((resolve, reject) => {
             const newSearcher = new Searcher({
                 email,
-                password,
                 name,
             });
 
@@ -26,9 +25,9 @@ class SearcherDAO {
         });
     }
 
-    delete() {}
+    // delete() {}
 
-    update() {}
+    // update() {}
 
     validateConnexion(email, password) {
         const errorWrongLoginPassword = "Votre identifiant ou mot de passe est incorrect";
