@@ -32,7 +32,7 @@ app.engine("html", require("ejs").renderFile);
 app.set("views", "./Public/views");
 app.set("view engine", "ejs");
 
-//////////////////////////////////////////////////
+///////////////////////////////////////////////
 /* Mise en place des routes */
 
 const { Login, Register, Programme, Projet, Tache } = require("./routes");
