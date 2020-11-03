@@ -62,6 +62,7 @@ app.use("*", routeErr);
 ////////////////////////////////////////////////
 /* Démarrage du serveur */
 app.listen(PORT, "localhost", () => {
-    console.log(`Serveur Running on : http://localhost:${PORT}`);
-    ConnexionBDMongo.getInstance();
+    console.log(`> Serveur Running on : http://localhost:${PORT}`);
 });
+
+module.exports = app;
