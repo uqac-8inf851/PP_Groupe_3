@@ -3,3 +3,7 @@
 
 # Ignorer les fichiers YAML
 *.yml
+
+# Ignore Istanbul coverage
+.nyc_output
+coverage
