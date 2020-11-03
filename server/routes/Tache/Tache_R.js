@@ -25,7 +25,7 @@ router.get("/", (req, res) => {
         });
 });
 
-// redirige vers un formulaire de création de projet
+// redirige vers un formulaire de création de tâche
 router.get("/Create/:projectId", (req, res) => {
     res.render("index.ejs", {
         template: "./Utils/Form",

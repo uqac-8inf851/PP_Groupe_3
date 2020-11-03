@@ -18,5 +18,5 @@
         ]
     },
     "extends": ["eslint:recommended", "prettier"],
-    "ignorePatterns": "*.test.js"
+    "ignorePatterns": ["*.test.js", "tests/**"]
 }
