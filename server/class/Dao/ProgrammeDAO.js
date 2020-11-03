@@ -52,14 +52,6 @@ class ProgrammeDAO {
         });
     }
 
-    // async delete(id) {
-    //     return new Promise(async (resolve, reject) => {
-    //
-
-    //         });
-    //     });
-    // }
-
     update() {}
 
     findById() {}

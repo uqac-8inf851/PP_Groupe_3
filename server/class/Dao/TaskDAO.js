@@ -119,20 +119,6 @@ class TaskDAO {
 
         return Promise.all(promises);
     }
-
-    // findById(id) {
-    //     return new Promise((resolve, reject) => {
-    //         Task.findById(id, async (err, task) => {
-    //             if (err) return reject(err);
-
-    //             if (!task) return reject("La tâche n'existe pas");
-
-    //             await task.populate("searchers", "name").execPopulate();
-
-    //             resolve(task);
-    //         });
-    //     });
-    // }
 }
 
 module.exports = TaskDAO;

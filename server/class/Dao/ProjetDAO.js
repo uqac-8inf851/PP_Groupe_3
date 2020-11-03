@@ -109,23 +109,6 @@ class ProjetDAO {
             });
         });
     }
-
-    // findById(id) {
-    //     return new Promise((resolve, reject) => {
-    //         Project.findById(id, async (err, project) => {
-    //             if (err) return reject(error("", err));
-
-    //             if (!project) return reject(error());
-
-    //             await project
-    //                 .populate("searchers", "name")
-    //                 .populate("tasks")
-    //                 .execPopulate();
-
-    //             resolve(project);
-    //         });
-    //     });
-    // }
 }
 
 module.exports = ProjetDAO;

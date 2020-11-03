@@ -52,19 +52,6 @@ class SearcherDAO {
             });
         });
     }
-
-    // findNamesById (id_array) {
-
-    //     return new Promise ( res => {
-
-    //         Searcher.find().where('_id').in(id_array).select('name').exec ( (err, results) => {
-
-    //             if (err) res (false)
-
-    //             res (results)
-    //         })
-    //     })
-    // }
 }
 
 module.exports = SearcherDAO;
