@@ -11,14 +11,14 @@ router.get("/", (req, res) => {
     new ProjetDAO()
         .getAllProjectForUser(searcherId)
         .then((projects) => {
-            res.render("index.ejs", {
+            return res.render("index.ejs", {
                 Projets: projects,
                 template: "./Projet/Projet",
             });
         })
         .catch((err) => {
             console.error(err);
-            res.render("index.ejs", {
+            return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
             });
@@ -48,11 +48,11 @@ router.post("/Create", (req, res) => {
     new ProjetDAO()
         .create(searcherId, name, description, programId)
         .then(() => {
-            res.redirect("/Projet");
+            return res.redirect("/Projet");
         })
         .catch((err) => {
             console.error(err);
-            res.render("index.ejs", {
+            return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
             });
@@ -71,7 +71,7 @@ router.post("/AddSearcher/:projectId", (req, res) => {
         })
         .catch((err) => {
             console.error(err);
-            res.render("index.ejs", {
+            return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
             });
@@ -89,7 +89,7 @@ router.post("/Delete/:id", (req, res) => {
         })
         .catch((err) => {
             console.error(err);
-            res.render("index.ejs", {
+            return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
             });

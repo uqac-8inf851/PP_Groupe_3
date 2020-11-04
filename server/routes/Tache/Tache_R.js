@@ -11,14 +11,14 @@ router.get("/", (req, res) => {
     new TaskDAO()
         .getAllTaskForUser(searcherId)
         .then((tasks) => {
-            res.render("index.ejs", {
+            return res.render("index.ejs", {
                 Tasks: tasks,
                 template: "./Tache/Tache",
             });
         })
         .catch((err) => {
             console.error(err);
-            res.render("index.ejs", {
+            return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
             });
@@ -61,7 +61,7 @@ router.post("/Create", (req, res) => {
         })
         .catch((err) => {
             console.error(err);
-            res.render("index.ejs", {
+            return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
             });
@@ -80,7 +80,7 @@ router.post("/AddSearcher/:taskId", (req, res) => {
         })
         .catch((err) => {
             console.error(err);
-            res.render("index.ejs", {
+            return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
             });
@@ -98,7 +98,7 @@ router.post("/Delete/:id", (req, res) => {
         })
         .catch((err) => {
             console.error(err);
-            res.render("index.ejs", {
+            return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
             });
