@@ -22,7 +22,7 @@ app.use(
     sessions({
         cookieName: "session",
         secret: "sjwf0MKLBVsTMMzVO4dI0FFEyO3JZ5DAluG28Irj8n29Sloir6lxDpTVKiyamDbkVK8rkEzKQPAjStI5HARKF6iw6ZESn9p942KR",
-        duration: 5 * 60 * 1000,
+        duration: 1 * 60 * 60 * 1000, // 1 heure
         httpOnly: true,
         ephemeral: true,
     })
