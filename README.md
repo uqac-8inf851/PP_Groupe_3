@@ -43,11 +43,11 @@ Ce répertoire contient les sources pour le projet pratique du cours de Génie L
 
 ### Améliorations à faire (rendu en cours)
 
--   Système de logging
--   Test unitaires et d'intégration
+-   FINIT
 
 ### Améliorations à faire (prochain rendu)
 
+-   Système de logging
 -   Setup les variables d'environnement proprement (.env, etc)
 -   Intégration continue : déploiement automatique au push sur main
 -   Améliorer les schémas (default, validation, etc)
