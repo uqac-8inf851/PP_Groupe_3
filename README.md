@@ -61,3 +61,5 @@ Ce répertoire contient les sources pour le projet pratique du cours de Génie L
 ### Bugs
 
 -   De temps en temps à l'execution des tests l'erreur "MongooseServerSelectionError: Server selection timed out after ...ms" apparaît et empêche les tests de s'effectuer
+-   On peut supprimer le programme même si on est pas admin
+-   D'ailleurs ajouter un admin au projet pour que seul lui puisse supprimer serait pas mal
