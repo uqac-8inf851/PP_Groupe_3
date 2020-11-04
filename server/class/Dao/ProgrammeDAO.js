@@ -34,7 +34,7 @@ class ProgrammeDAO {
         const defaultErrorMessage = "Une erreur est survenue lors de la suppression du programme";
         return new Promise((resolve, reject) => {
             Program.findOneAndDelete({ _id: id }, (err, programme) => {
-                if (err) return reject(error(defaultErrorMessage, err));
+                if (err || !programme) return reject(error(defaultErrorMessage, err));
 
                 Searcher.updateMany({ programs: id }, { $pull: { programs: id } }, (err) => {
                     if (err) return reject(error(defaultErrorMessage, err));

@@ -57,3 +57,7 @@ Ce répertoire contient les sources pour le projet pratique du cours de Génie L
 -   Gestion des permissions (seul l'admin du program peut supprimer le programme)
 -   Améliorer le routing, les redirections et le système d'erreur
 -   Faire les tests pour les DAO
+
+### Bugs
+
+-   De temps en temps à l'execution des tests l'erreur "MongooseServerSelectionError: Server selection timed out after ...ms" apparaît et empêche les tests de s'effectuer

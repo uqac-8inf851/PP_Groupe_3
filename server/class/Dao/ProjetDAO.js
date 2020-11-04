@@ -60,7 +60,7 @@ class ProjetDAO {
         const defaultErrorMessage = "Une erreur est survenue lors de la suppression des tâches du projet";
         return new Promise((resolve, reject) => {
             Project.findByIdAndDelete(id, function (err, project) {
-                if (err) return reject(error(defaultErrorMessage, err));
+                if (err || !project) return reject(error(defaultErrorMessage, err));
 
                 // supprimer le projet partout
                 Searcher.updateMany({ projects: id }, { $pull: { projects: id } }, (err) => {
