@@ -2,53 +2,101 @@
 
     <% Tasks.forEach( (task) =>{%>
     <div id="accordion">
-      <div class="card">
-        <div class="card-header" id="card-header">
-            <button class="btn btn-link card-title" data-toggle="collapse" data-target="#item-<%= task._id %>" aria-expanded="true">
-              <h5 class="card-title"><%= task.name %></h5>
-              <p><%= task.note %></p>
-            </button>
-        </div>
-  
-        <div class="collapse show" id="item-<%= task._id %>"  aria-labelledby="card-head" data-parent="#accordion">
-          <div class="card-body">
-            <div class="container-fluid" style="border: 1px solid black;">
-              
-              <div class="row">
-                <div class="col">
-                
-                <div class="container">
-                    <ul>
-                        <li>Nom tâche : <%= task.name %></li>
-                        <li>Notes : <%= task.note %></li>
-                        <li>Est archivée : <%= task.isArchived ? "oui" : "non" %></li>
-                        <li>Status : <%= task.status === 0 ? "En cours" : task.status === 1 ? " Finie" : task.status === 2 ? " En attente" : "undefined"  %></li>
-                        <li>Date de début : <%= task.startingDate || "aucune" %></li>
-                        <li>Date de fin : <%= task.endingDate || "aucune" %></li>
-                        <li>Durée de la tâche : <%= task.duration !== null ? (task.duration / 1000 / 3600) + "h" : "N/A" %></li>
-                        <li>Durée déjà faite : <%= task.duration !== null ? (task.elapsedDuration / 1000 / 3600) + "h" : "N/A" %></li>
-                        <li>Priorité : <%= task.priority %></li>
-                        <li>Équipe de recherche : <%= task.searchers.map((searcher => searcher.name)).join(', ') || "aucun" %></li>
-                        <li>Avancements : <%= task.advancements.join(', ') || "aucun" %></li>
-                        <li>Sous-tâches : <%= task.subTasks.join(', ') || "aucune" %></li>
-                    </ul>
+      <ul style="margin-top: 20px; padding-inline-start: 0px;">
+        <div class="card">
+          <div class="card-header d-flex" id="card-header">
+            <div class="flex-grow-1">
+              <a class="card-title" data-toggle="collapse" data-target="#item-<%= task._id %>" aria-expanded="true" style="text-decoration: none; cursor: pointer;">
+                <h5 class="card-title"><%= task.projectRef.name + "/" + task.name.charAt(0).toUpperCase() + task.name.slice(1) %></h5>
+              </a>
+            </div>
+            <div class="d-flex">
+              <form action="/Tache/Delete/<%=task._id %>" method="POST" class="align-self-center">
+                <button type="submit" class="fa fa-trash fa-1x" style="margin: 0px 10px; border: none; background-color: rgba(0, 0, 0, 0.0);"> <!-- Delete task button -->
+              </form>
+            </div>
+          </div>
+          <div class="collapse" id="item-<%= task._id %>"  aria-labelledby="card-head" data-parent="#accordion">
+            <div class="card-body" style="padding: 0px;">
+              <div class="container-fluid">
+                <div class="flex-column">
+                  <h6>Description :</h6>
+                  <%= task.note || "Aucune description disponible pour ce projet" %>
                 </div>
-
-                <form action="/Tache/Delete/<%=task._id %>" method="POST">
-                    <input type="submit" value="Supprimer la tâche">
-                </form>
-
-                <form action="Tache/AddSearcher/<%=task._id %>" method="POST">
-                    <div>Ajouter utilisateur par email<input type="email" name="email">
-                    <input type="submit" value = "Ajouter"></div> 
-                </form>
-
+                <div class="row" style="margin-top: 50px;">
+                  <div class="col">
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col d-flex flex-column"> <!-- First col -->
+                            <table class="table table-hover">
+                              <thead>
+                                <tr>
+                                  <th>Nom</th>
+                                  <th>Archivée</th>
+                                  <th>Statut</th>
+                                  <th>Date debut</th>
+                                  <th>Date fin</th>
+                                  <th>Duree</th>
+                                  <th>Temps passé</th>
+                                  <th>Priorite</th>
+                                  <th>Equipe</th>
+                                  <th>Avancements</th>
+                                  <th>Sous-taches</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td><%= task.name %></td>
+                                  <td><%= task.isArchived ? "oui" : "non" %></td>
+                                  <td><%= task.status === 0 ? "En cours" : task.status === 1 ? " Finie" : task.status === 2 ? " En attente" : "undefined"  %></td>
+                                  <td><%= task.startingDate || "aucune" %></td>
+                                  <td><%= task.endingDate || "aucune" %></td>
+                                  <td><%= task.duration !== null ? (task.duration) + "h" : "N/A" %></td>
+                                  <td><%= task.duration !== null ? (task.elapsedDuration) + "h" : "N/A" %></td>
+                                  <td><%= task.priority %></td>
+                                  <td><%= task.searchers.map((searcher => searcher.name)).join(', ') || "aucun" %></td>
+                                  <td><%= task.advancements.join(', ') || "aucun" %></td>
+                                  <td>
+                                    <ul style="list-style: none; padding-inline-start: 0px;;">
+                                      <li> <%= task.subTasks.join(', ') || "aucune" %> </li>
+                                    </ul>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <form action="Tache/AddSearcher/<%=task._id %>" method="POST">
+                                    <table class="table table-hover">
+                                      <thead>
+                                        <tr>
+                                          <th>Ajouter un chercheur a la tache</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <td>
+                                          <div class="d-flex flex-column">
+                                            <div class="justify-content-between">
+                                              <label for="email"> Adresse email :</label>
+                                              <input type="email" name="email" placeholder="email@example.com"> <!-- input field -->
+                                              <input class="btn btn-sm btn-success" type="submit" value = "Ajouter"> <!-- add searcher button -->
+                                              <!-- invisible program id field -->
+                                            </div>
+                                          </div>
+                                        </td>
+                                      </tbody>
+                                    </table>
+                                  </form>
+                                </tr>
+                              </tbody>
+                            </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </ul>
     </div>
   <% } ) %>
   </div>

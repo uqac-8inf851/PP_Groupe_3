@@ -19,7 +19,11 @@
           <div class="collapse" id="item-<%= project._id %>" aria-labelledby="card-head" data-parent="#accordion">
             <div class="card-body">
               <div class="container-fluid">
-                <div class="row">
+                <div class="flex-column">
+                  <h6>Description :</h6>
+                  <%= project.description %>
+               </div>
+                <div class="row" style="margin-top: 50px;">
                   <div class="col d-flex flex-column"> <!-- First col -->
                     <form action="/Projet/AddSearcher/<%= project._id %>" method="POST">
                       <table class="table table-hover">
@@ -66,6 +70,7 @@
                   <div class="col d-flex flex-column"> <!-- Third col -->
                     <form action="/Tache/Create/<%= project._id %>">
                       <input type="submit" class="btn btn-success" value="Ajouter tache">
+                      <!-- //TODO afficher taches -->
                     </form>
                   </div>
                 </div>
