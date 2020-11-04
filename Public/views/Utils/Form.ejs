@@ -1,12 +1,20 @@
 <div class="container">
-    <h1><%= title %></h1>		
-    <form id="my_form" method="POST" action="<%= action %>">
+    <h1><%= formTitle %></h1>		
+    <form method="POST" action="<%= action %>">
         <%for (var input of inputs) { %>
-            <label for="<%= input.id %>"><%= input.name %></label>
-            <input id="<%= input.id %>" name="<%= input.id %>" type="<%= (input.type !== null ? input.type : "text") %>" value="<%= (input.value !== null ? input.value : null) %>" style= "<%= (input.style !== null ? input.style : null) %>" />
-            <br />
+            <div class="form-group">
+                <label for="<%= input.id %>"><%= input.name %></label>
+                <input 
+                    type="<%= (input.type !== null ? input.type : "text") %>"
+                    class="form-control"
+                    id="<%= input.id %>"
+                    name="<%= input.id %>"
+                    value="<%= (input.value !== null ? input.value : null) %>"
+                    style= "<%= (input.style !== null ? input.style : null) %>"
+                >
+            </div>
         <% } %>
 
-        <input type="submit" name="submit" value="Valider" />
+        <button type="submit" class="btn btn-primary">Valider</button>
     </form>
 </div>
