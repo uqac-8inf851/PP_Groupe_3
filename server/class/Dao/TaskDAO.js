@@ -8,6 +8,7 @@ class TaskDAO {
             const data = {
                 name,
                 note,
+                status: 0,
                 searchers: [searcherId],
                 advancements: [],
                 subTasks: [],
@@ -18,16 +19,15 @@ class TaskDAO {
 
             if (duration !== null && duration !== "") {
                 data.duration = Number(duration);
+                data.elapsedDuration = 0;
             }
 
             if (startingDate !== null && startingDate !== "") {
                 data.startingDate = new Date(startingDate);
-                data.elapsedDuration = 0;
             }
 
             if (endingDate !== null && endingDate !== "") {
                 data.endingDate = new Date(endingDate);
-                data.elapsedDuration = 0;
             }
 
             const task = new Task(data);
@@ -57,7 +57,14 @@ class TaskDAO {
                 searcher
                     .populate({
                         path: "tasks",
-                        populate: { path: "searchers", select: "name" },
+                        populate: [
+                            { path: "searchers", select: "name email" },
+                            {
+                                path: "projectRef",
+                                select: "name programRef",
+                                populate: { path: "programRef", select: "name" },
+                            },
+                        ],
                     })
                     .execPopulate((err, searcherPopulated) => {
                         if (err || !searcherPopulated) return reject(error(defaultErrorMessage, err));

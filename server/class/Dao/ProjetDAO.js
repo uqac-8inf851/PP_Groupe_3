@@ -34,25 +34,21 @@ class ProjetDAO {
     getAllProjectForUser(searcherId) {
         const defaultErrorMessage = "Une erreur est survenue à la lecture de vos projets";
         return new Promise((resolve, reject) => {
-            Searcher.findById(searcherId, (err, searcher) => {
-                if (err || !searcher) return reject(error(defaultErrorMessage, err));
+            Project.find({ searchers: searcherId })
+                .populate({
+                    path: "searchers",
+                    select: "name email",
+                })
+                .populate({ path: "programRef", select: "name" })
+                .populate({
+                    path: "tasks",
+                    populate: { path: "searchers", select: "name" },
+                })
+                .exec((err, projects) => {
+                    if (err || !projects) return reject(error(defaultErrorMessage, err));
 
-                searcher
-                    .populate({
-                        path: "projects",
-                        populate: [
-                            { path: "searchers", select: ["name", "email"] },
-                            { path: "programRef", select: "name" },
-                        ],
-                    })
-                    .execPopulate((err, searcherPopulate) => {
-                        if (err || !searcherPopulate) return reject(error(defaultErrorMessage, err));
-
-                        const { projects } = searcherPopulate;
-
-                        resolve(projects);
-                    });
-            });
+                    resolve(projects);
+                });
         });
     }
 

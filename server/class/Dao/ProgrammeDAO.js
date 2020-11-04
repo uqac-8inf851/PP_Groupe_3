@@ -60,8 +60,8 @@ class ProgrammeDAO {
         const defaultErrorMessage = "Une erreur est survenue lors de la lecture de vos programmes";
         return new Promise((resolve, reject) => {
             Program.find({ searchers: id })
-                .populate("searchers", "name")
-                .populate("administrator", "name")
+                .populate("searchers", "name email")
+                .populate("administrator", "name email")
                 .populate({
                     path: "projects",
                     populate: { path: "searchers", select: "name" },
