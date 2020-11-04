@@ -11,6 +11,8 @@ router.get("/", (req, res) => {
             return res.render("index.ejs", {
                 Programmes: programmes,
                 template: "./Programme/Programme",
+                Title: "Mes programmes",
+                Link: "/Programmes",
             });
         })
         .catch((err) => {
@@ -18,6 +20,8 @@ router.get("/", (req, res) => {
             return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
+                Title: "Erreur",
+                Link: "",
             });
         });
 });
@@ -25,12 +29,14 @@ router.get("/", (req, res) => {
 router.get("/Create", (req, res) => {
     res.render("index.ejs", {
         template: "./Utils/Form",
-        title: "Ajouter un programme",
+        formTitle: "Ajouter un programme",
         action: "/Programmes/Create",
         inputs: [
             { id: "name", name: "Nom du programme" },
             { id: "description", name: "Description du programme" },
         ],
+        Title: "Créer un programme",
+        Link: "",
     });
 });
 
@@ -46,6 +52,8 @@ router.post("/Create", (req, res) => {
             return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
+                Title: "Erreur",
+                Link: "",
             });
         });
 });
@@ -61,6 +69,8 @@ router.post("/AddSearcher/:programId", (req, res) => {
             return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
+                Title: "Erreur",
+                Link: "",
             });
         });
 });
@@ -76,6 +86,8 @@ router.post("/delete/:id", (req, res) => {
             return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
+                Title: "Erreur",
+                Link: "",
             });
         });
 });

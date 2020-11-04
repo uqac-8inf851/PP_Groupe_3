@@ -14,6 +14,8 @@ router.get("/", (req, res) => {
             return res.render("index.ejs", {
                 Projets: projects,
                 template: "./Projet/Projet",
+                Title: "Mes projets",
+                Link: "/Projet",
             });
         })
         .catch((err) => {
@@ -21,6 +23,8 @@ router.get("/", (req, res) => {
             return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
+                Title: "Erreur",
+                Link: "",
             });
         });
 });
@@ -29,13 +33,15 @@ router.get("/", (req, res) => {
 router.get("/Create/:programId", (req, res) => {
     res.render("index.ejs", {
         template: "./Utils/Form",
-        title: "Ajouter un projet",
+        formTitle: "Ajouter un projet",
         action: "/Projet/Create",
         inputs: [
             { id: "name", name: "Nom du projet" },
             { id: "description", name: "Description du projet" },
             { id: "programId", value: req.params.programId, style: "display:none;" },
         ],
+        Title: "Créer un projet",
+        Link: "",
     });
 });
 
@@ -55,6 +61,8 @@ router.post("/Create", (req, res) => {
             return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
+                Title: "Erreur",
+                Link: "",
             });
         });
 });
@@ -74,6 +82,8 @@ router.post("/AddSearcher/:projectId", (req, res) => {
             return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
+                Title: "Erreur",
+                Link: "",
             });
         });
 });
@@ -92,6 +102,8 @@ router.post("/Delete/:id", (req, res) => {
             return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
+                Title: "Erreur",
+                Link: "",
             });
         });
 });

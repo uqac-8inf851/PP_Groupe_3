@@ -14,6 +14,8 @@ router.get("/", (req, res) => {
             return res.render("index.ejs", {
                 Tasks: tasks,
                 template: "./Tache/Tache",
+                Title: "Mes tâches",
+                Link: "/Tache",
             });
         })
         .catch((err) => {
@@ -21,6 +23,8 @@ router.get("/", (req, res) => {
             return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
+                Title: "Erreur",
+                Link: "",
             });
         });
 });
@@ -29,7 +33,7 @@ router.get("/", (req, res) => {
 router.get("/Create/:projectId", (req, res) => {
     res.render("index.ejs", {
         template: "./Utils/Form",
-        title: "Ajouter une tâche",
+        formTitle: "Ajouter une tâche",
         action: "/Tache/Create",
         inputs: [
             { id: "name", name: "Nom de la tâche" },
@@ -41,10 +45,12 @@ router.get("/Create/:projectId", (req, res) => {
                 value: "2020-10-01",
             },
             { id: "endingDate", name: "Date de fin (opt.)", type: "date", value: "2020-11-01" },
-            { id: "duration", name: "Durée (opt.) en ms.", type: "number" },
+            { id: "duration", name: "Durée (opt.) en heure", type: "number" },
             { id: "priority", name: "priorité", type: "number" },
             { id: "projectId", value: req.params.projectId, style: "display:none;" },
         ],
+        Title: "Créer une tâche",
+        Link: "",
     });
 });
 
@@ -54,8 +60,10 @@ router.post("/Create", (req, res) => {
     const { name, note, startingDate, endingDate, priority, duration, projectId } = req.body;
     const { searcherId } = req.session;
 
+    const modifiedDuration = duration * 60 * 60 * 1000; // temp
+
     new TaskDAO()
-        .create(searcherId, name, note, startingDate, endingDate, priority, duration, projectId)
+        .create(searcherId, name, note, startingDate, endingDate, priority, modifiedDuration, projectId)
         .then(() => {
             return res.redirect("/Tache");
         })
@@ -64,6 +72,8 @@ router.post("/Create", (req, res) => {
             return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
+                Title: "Erreur",
+                Link: "",
             });
         });
 });
@@ -83,6 +93,8 @@ router.post("/AddSearcher/:taskId", (req, res) => {
             return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
+                Title: "Erreur",
+                Link: "",
             });
         });
 });
@@ -101,6 +113,8 @@ router.post("/Delete/:id", (req, res) => {
             return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
+                Title: "Erreur",
+                Link: "",
             });
         });
 });
