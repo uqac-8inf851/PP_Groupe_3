@@ -1,107 +1,223 @@
-// var express = require("express");
+const request = require("supertest");
+const chaiHttp = require("chai-http");
+const chai = require("chai");
+const app = require("../../server/server");
+const mongoose = require("mongoose");
 
-// const TaskDAO = require("../../class/Dao/TaskDAO");
+const { Task } = require("../../server/class/Models/Models");
 
-// var router = express.Router();
+// Configure chai
+chai.use(chaiHttp);
+const { expect } = chai;
 
-// // lecture de toutes les tâches du chercheur
-// router.get("/", (req, res) => {
-//     const { searcherId } = req.session;
+const dataSet = require("../setup/data");
+const { authenticateUser } = require("../setup/utils");
 
-//     new TaskDAO()
-//         .getAllTaskForUser(searcherId)
-//         .then((tasks) => {
-//             res.render("index.ejs", {
-//                 Tasks: tasks,
-//                 template: "./Tache/Tache",
-//             });
-//         })
-//         .catch((err) => {
-//             console.error(err);
-//             res.render("index.ejs", {
-//                 template: "./Utils/Error",
-//                 err,
-//             });
-//         });
-// });
+describe("Test du routage de /Tache", function () {
+    describe("Test les routes /Tache/** GET sans authentification", function () {
+        it('route "/Tache" -> retourne status Redirect (302) sur /Login', (done) => {
+            request(app)
+                .get("/Tache")
+                .expect(302)
+                .end((err, res) => {
+                    if (err) return done(err);
 
-// // redirige vers un formulaire de création de projet
-// router.get("/Create/:projectId", (req, res) => {
-//     res.render("index.ejs", {
-//         template: "./Utils/Form",
-//         title: "Ajouter une tâche",
-//         action: "/Tache/Create",
-//         inputs: [
-//             { id: "name", name: "Nom de la tâche" },
-//             { id: "note", name: "Note sur la tâche (description)" },
-//             {
-//                 id: "startingDate",
-//                 name: "Date de début (opt.) - NE PAS TOUCHER EXPERIMENTAL",
-//                 type: "number",
-//             },
-//             { id: "endingDate", name: "Date de fin (opt.) - NE PAS TOUCHER EXPERIMENTAL", type: "number" },
-//             { id: "duration", name: "Durée (opt.) en ms.", type: "number" },
-//             { id: "priority", name: "priorité", type: "number" },
-//             { id: "projectId", value: req.params.projectId, style: "display:none;" },
-//         ],
-//     });
-// });
+                    expect(res.text).to.be.equal("Found. Redirecting to /Login");
+                    done();
+                });
+        });
 
-// // route de création d'une tâche
-// // params : name, note, startingDate, endingDate, priority, projectId
-// router.post("/Create", (req, res) => {
-//     const { name, note, startingDate, endingDate, priority, duration, projectId } = req.body;
-//     const { searcherId } = req.session;
+        it('route "/Tache/Create/:projectId" (avec mauvaises infos) -> retourne status Redirect (302) sur /Login', (done) => {
+            request(app)
+                .get(`/Tache/Create/${dataSet.fakeId}`)
+                .expect(302)
+                .end((err, res) => {
+                    if (err) return done(err);
 
-//     new TaskDAO()
-//         .create(searcherId, name, note, startingDate, endingDate, priority, duration, projectId)
-//         .then(() => {
-//             return res.redirect("/Tache");
-//         })
-//         .catch((err) => {
-//             console.error(err);
-//             res.render("index.ejs", {
-//                 template: "./Utils/Error",
-//                 err,
-//             });
-//         });
-// });
+                    expect(res.text).to.be.equal("Found. Redirecting to /Login");
+                    done();
+                });
+        });
 
-// // ajout d'un chercheur à la tâche
-// router.post("/AddSearcher/:taskId", (req, res) => {
-//     const { email } = req.body;
-//     const { taskId } = req.params;
+        it('route "/Tache/Create/:projectId" (avec bonnes infos) -> retourne status Redirect (302) sur /Login', (done) => {
+            request(app)
+                .get(`/Tache/Create/${dataSet.project._id}`)
+                .expect(302)
+                .end((err, res) => {
+                    if (err) return done(err);
 
-//     new TaskDAO()
-//         .addSearcherToTask(email, taskId)
-//         .then(() => {
-//             return res.redirect("/Tache");
-//         })
-//         .catch((err) => {
-//             console.error(err);
-//             res.render("index.ejs", {
-//                 template: "./Utils/Error",
-//                 err,
-//             });
-//         });
-// });
+                    expect(res.text).to.be.equal("Found. Redirecting to /Login");
+                    done();
+                });
+        });
+    });
 
-// // supprime la tâche
-// router.post("/Delete/:id", (req, res) => {
-//     const { id } = req.params;
+    describe("Test les routes /Tache/** POST sans authentification", function () {
+        it('route "/Tache/Create" -> retourne status Redirect (302) sur /Login', (done) => {
+            request(app)
+                .post("/Tache/Create")
+                .expect(302)
+                .end((err, res) => {
+                    if (err) return done(err);
 
-//     new TaskDAO()
-//         .deleteById(id)
-//         .then(() => {
-//             return res.redirect("/Tache");
-//         })
-//         .catch((err) => {
-//             console.error(err);
-//             res.render("index.ejs", {
-//                 template: "./Utils/Error",
-//                 err,
-//             });
-//         });
-// });
+                    expect(res.text).to.be.equal("Found. Redirecting to /Login");
+                    done();
+                });
+        });
 
-// module.exports = router;
+        it('route "/Tache/AddSearcher/:taskId" (avec mauvaises infos) -> retourne status Redirect (302) sur /Login', (done) => {
+            request(app)
+                .post(`/Tache/AddSearcher/${dataSet.fakeId}`)
+                .expect(302)
+                .end((err, res) => {
+                    if (err) return done(err);
+
+                    expect(res.text).to.be.equal("Found. Redirecting to /Login");
+                    done();
+                });
+        });
+
+        it('route "/Tache/AddSearcher/:taskId" (avec bonnes infos) -> retourne status Redirect (302) sur /Login', (done) => {
+            request(app)
+                .post(`/Tache/AddSearcher/${dataSet.task._id}`)
+                .expect(302)
+                .end((err, res) => {
+                    if (err) return done(err);
+
+                    expect(res.text).to.be.equal("Found. Redirecting to /Login");
+                    done();
+                });
+        });
+
+        it('route "/Tache/Delete/:taskId" (avec mauvaises infos) -> retourne status Redirect (302) sur /Login', (done) => {
+            request(app)
+                .post(`/Tache/Delete/${dataSet.fakeId}`)
+                .expect(302)
+                .end((err, res) => {
+                    if (err) return done(err);
+
+                    expect(res.text).to.be.equal("Found. Redirecting to /Login");
+                    done();
+                });
+        });
+
+        it('route "/Tache/Delete/:taskId" (avec bonnes infos) -> retourne status Redirect (302) sur /Login', (done) => {
+            request(app)
+                .post(`/Tache/Delete/${dataSet.task._id}`)
+                .expect(302)
+                .end((err, res) => {
+                    if (err) return done(err);
+
+                    expect(res.text).to.be.equal("Found. Redirecting to /Login");
+                    done();
+                });
+        });
+    });
+
+    describe("Test les routes /Tache/** GET avec authentification", function () {
+        let session = null;
+
+        before((done) => {
+            authenticateUser({ email: dataSet.searcher1.email, password: dataSet.uncryptedPassword }, app)
+                .then((authentificatedSession) => {
+                    session = authentificatedSession;
+                    done();
+                })
+                .catch(done);
+        });
+
+        it('route "/Tache" -> retourne status OK (200)', (done) => {
+            session
+                .get("/Tache")
+                .expect(200)
+                .end((err) => {
+                    if (err) return done(err);
+                    done();
+
+                    // todo -> ajouter des tests pour voir si les tâches s'affichent bien
+                });
+        });
+
+        // todo 'route "/Tache/Create/:projectId" (avec mauvaises infos)
+
+        it('route "/Tache/Create/:projectId" (avec bonnes infos) -> retourne status OK (200)', (done) => {
+            session.get(`/Tache/Create/${dataSet.project._id}`).expect(200, done);
+        });
+    });
+
+    describe("Test les routes /Tache/** POST avec authentification", function () {
+        var session = null;
+        const newDummyTask = dataSet.dummyGenerateData.task();
+
+        before((done) => {
+            authenticateUser({ email: dataSet.searcher1.email, password: dataSet.uncryptedPassword }, app)
+                .then((authentificatedSession) => {
+                    session = authentificatedSession;
+                    done();
+                })
+                .catch(done);
+        });
+
+        it(`route /Tache/Create (avec mauvaises infos) -> OK (200) (échec)`, (done) => {
+            session.post("/Tache/Create").expect(200, done);
+        });
+
+        it(`route /Tache/Create (avec bonnes infos) -> retourne status Redirect (302) (succès)`, (done) => {
+            session
+                .post("/Tache/Create")
+                .send({ ...newDummyTask, projectId: dataSet.project._id })
+                .expect(302, done);
+        });
+
+        it(`route /Tache/AddSearcher/:taskId (avec bonnes infos) -> retourne status Redirect (302) sur /Tache (succès)`, (done) => {
+            Task.findOne({ name: newDummyTask.name, note: newDummyTask.note }, (err, res) => {
+                if (err) return done(err);
+                if (!res) return done("La tâche n'existe pas alors qu'elle devrait");
+
+                session
+                    .post(`/Tache/AddSearcher/${res._id}`)
+                    .send({ email: dataSet.searcher2.email })
+                    .expect(302)
+                    .end((err, res) => {
+                        if (err) return done(err);
+
+                        expect(res.text).to.be.equal("Found. Redirecting to /Tache");
+                        done();
+                    });
+            });
+        });
+
+        it(`route /Tache/AddSearcher/:taskId (avec mauvaises infos) -> retourne status OK (200) (échec)`, (done) => {
+            Task.findOne({ name: newDummyTask.name, note: newDummyTask.note }, (err, res) => {
+                if (err) return done(err);
+                if (!res) return done("La tâche n'existe pas alors qu'elle devrait");
+
+                session
+                    .post(`/Tache/AddSearcher/${res._id}`)
+                    .send({ email: dataSet.dummyGenerateData.searcher().email })
+                    .expect(200, done);
+            });
+        });
+
+        it(`route /Tache/Delete/:taskId (avec mauvaises infos) -> OK (200) (échec)`, (done) => {
+            session.post(`/Tache/Delete/${dataSet.fakeId}`).expect(200, done);
+        });
+
+        it(`route /Tache/Delete/:taskId (avec bonnes infos) -> retourne status Redirect (302) sur /Tache (succès)`, (done) => {
+            Task.findOne({ name: newDummyTask.name, note: newDummyTask.note }, (err, res) => {
+                if (err) return done(err);
+                if (!res) return done("La tâche n'existe pas alors qu'elle devrait");
+
+                session
+                    .post(`/Tache/Delete/${res._id}`)
+                    .expect(302)
+                    .end((err, res) => {
+                        if (err) return done(err);
+
+                        expect(res.text).to.be.equal("Found. Redirecting to /Tache");
+                        done();
+                    });
+            });
+        });
+    });
+});
