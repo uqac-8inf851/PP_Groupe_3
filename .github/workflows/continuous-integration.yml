@@ -7,7 +7,7 @@ on:
       - develop
     paths:
     - 'server/**'
-    - 'test/**'
+    - 'tests/**'
        
 jobs:
   test:
