@@ -6,14 +6,23 @@ const sessions = require("client-sessions");
 const connectDB = require("./config/database/db");
 
 // selection du port (prod / dev)
-const PORT_PROD = process.env.PORT || 80
+const PORT_PROD = process.env.PORT || 80;
 const PORT_DEV = 5500;
+const PORT_TEST = 5500;
 let PORT = null;
 
 if (process.env.NODE_ENV === "dev" || process.env.NODE_ENV === "development") {
+    // en cas de dev
     PORT = PORT_DEV;
-} else {
+} else if (process.env.NODE_ENV === "test") {
+    // en cas de test
+    PORT = PORT_TEST;
+} else if (process.env.NODE_ENV === "prod" || process.env.NODE_ENV === "production") {
+    // en cas de production
     PORT = PORT_PROD;
+} else {
+    // par défaut
+    PORT = PORT_DEV;
 }
 
 // création de l'app
