@@ -13,7 +13,7 @@ Ce répertoire contient les sources pour le projet pratique du cours de Génie L
 
 ### Installation du projet
 
-1. Cloner le projet avec la commande `git clone https://github.com/uqac-8inf851/PP_Groupe_3.git`
+1. Cloner le projet avec la commande `git clone https://github.com/uqac-8inf851/PP_Groupe_3.git` (attention la branch principale s'appelle `main`)
 1. Executer `npm install` à la racine du dossier pour installer les modules NPM
 
 ### Lancement du projet
@@ -43,13 +43,12 @@ Ce répertoire contient les sources pour le projet pratique du cours de Génie L
 
 ### Améliorations à faire (rendu en cours)
 
--   FINIT
-
-### Améliorations à faire (prochain rendu)
-
 -   Système de logging
--   Setup les variables d'environnement proprement (.env, etc)
 -   Intégration continue : déploiement automatique au push sur main
+
+### Choses améliorables
+
+-   Setup les variables d'environnement proprement (.env, etc)
 -   Améliorer les schémas (default, validation, etc)
 -   Vérification des paramètres côté serveur à la reception avec [express-validator](https://express-validator.github.io/docs/check-api.html)
 -   Validation des données dans les DAO (longueur, etc, ...)
