@@ -10,7 +10,8 @@
         "lint": "eslint ./server",
         "prettier": "npx prettier --write .",
         "prettier-check": "prettier --check .",
-        "coverage": "cross-env NODE_ENV=test nyc --reporter=text --reporter=html mocha ./tests/start.test.js --exit --timeout=6000"
+        "coverage": "cross-env NODE_ENV=test nyc --reporter=text --reporter=html mocha ./tests/start.test.js --exit --timeout=6000",
+        "start" : "pm2-runtime start ecosystem.config.js --env production"
     },
     "author": "Équipe projet pratique - Groupe 3",
     "license": "MIT",
@@ -24,6 +25,7 @@
         "express": "^4.17.1",
         "mocha": "^8.2.1",
         "mongoose": "^5.10.7",
+        "pm2": "^4.5.0",
         "winston": "^3.3.3"
     },
     "devDependencies": {

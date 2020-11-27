@@ -5,7 +5,16 @@ const sessions = require("client-sessions");
 
 const connectDB = require("./config/database/db");
 
-const PORT = 5500;
+// selection du port (prod / dev)
+const PORT_PROD = process.env.PORT || 80
+const PORT_DEV = 5500;
+let PORT = null;
+
+if (process.env.NODE_ENV === "dev" || process.env.NODE_ENV === "development") {
+    PORT = PORT_DEV;
+} else {
+    PORT = PORT_PROD;
+}
 
 // création de l'app
 const app = express();
