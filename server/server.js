@@ -12,6 +12,9 @@ const connectDB = require("./config/database/db");
 // selection du port
 const PORT = require("./config/port").PORT;
 
+// selection du host
+const HOST = require("./config/host").HOST;
+
 // création de l'app
 const app = express();
 
@@ -66,8 +69,8 @@ app.use("*", routeErr);
 
 ////////////////////////////////////////////////
 /* Démarrage du serveur */
-app.listen(PORT, "localhost", () => {
-    console.log(`> Serveur Running on : http://localhost:${PORT}`);
+app.listen(PORT, HOST, () => {
+    console.log(`> Serveur Running on : http://${HOST}:${PORT}`);
 });
 
 module.exports = app;

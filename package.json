@@ -1,10 +1,10 @@
 {
-    "name": "projet_recherche",
+    "name": "projet_pratique_groupe_3",
     "version": "1.0.0",
     "description": "Projet pratique du cours de génie logiciel",
     "main": "server/server.js",
     "scripts": {
-        "start" : "pm2-runtime start ecosystem.config.js --env production",
+        "start": "pm2-runtime start ecosystem.config.js --env production",
         "debug": "nodemon ./server/server.js",
         "test": "cross-env NODE_ENV=test nyc --reporter=text-summary mocha ./tests/start.test.js --exit --timeout=6000",
         "coverage": "cross-env NODE_ENV=test nyc --reporter=text --reporter=html mocha ./tests/start.test.js --exit --timeout=6000",
