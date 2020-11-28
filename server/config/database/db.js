@@ -2,13 +2,17 @@ const mongoose = require("mongoose");
 const dbConfig = require("./db_config");
 
 const connectDB = () => {
-    var db;
+    let db;
 
-    // si on est en environnement de test
-    if (process.env.NODE_ENV === "test") {
-        db = dbConfig.url + dbConfig.test_database;
+    if (process.env.NODE_ENV === "dev" || process.env.NODE_ENV === "development") {
+        db = dbConfig.dev_database_url;
+    } else if (process.env.NODE_ENV === "test") {
+        db = dbConfig.test_database_url;
+    } else if (process.env.NODE_ENV === "prod" || process.env.NODE_ENV === "production") {
+        db = dbConfig.prod_database_url;
     } else {
-        db = dbConfig.url + dbConfig.prod_database;
+        console.error("l'environnement est invalide :", process.env.NODE_ENV);
+        process.exit(1);
     }
 
     mongoose

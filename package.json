@@ -4,14 +4,12 @@
     "description": "Projet pratique du cours de génie logiciel",
     "main": "server/server.js",
     "scripts": {
+        "start" : "pm2-runtime start ecosystem.config.js --env production",
         "debug": "nodemon ./server/server.js",
         "test": "cross-env NODE_ENV=test nyc --reporter=text-summary mocha ./tests/start.test.js --exit --timeout=6000",
-        "ready": "npm run lint && npm run test",
-        "lint": "eslint ./server",
-        "prettier": "npx prettier --write .",
-        "prettier-check": "prettier --check .",
         "coverage": "cross-env NODE_ENV=test nyc --reporter=text --reporter=html mocha ./tests/start.test.js --exit --timeout=6000",
-        "start" : "pm2-runtime start ecosystem.config.js --env production"
+        "lint": "eslint ./server",
+        "prettier": "npx prettier --write ."
     },
     "author": "Équipe projet pratique - Groupe 3",
     "license": "MIT",

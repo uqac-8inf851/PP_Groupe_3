@@ -1,9 +1,10 @@
 // propriété de configuration de la base de données
 
 module.exports = {
-    url: "mongodb://localhost:27017/",
-    prod_database: "PPratiqueGenie",
-    test_database: "PPratiqueGenie_Test",
+    dev_database_url: "mongodb://localhost:27017/PPratiqueGenie",
+    prod_database_url:
+        "mongodb+srv://pp-groupe-3-user:LyFvss2Oyd8PRsg7@pp-3.imsem.mongodb.net/PPratiqueGenie?retryWrites=true&w=majority",
+    test_database_url: "mongodb://localhost:27017/PPratiqueGenie_Test",
     options: {
         useNewUrlParser: true,
         useCreateIndex: true, // unique id so dont duplicate
