@@ -1,5 +1,5 @@
-// par défaut l'environnement est dev
-process.env.NODE_ENV = process.env.NODE_ENV || "dev";
+// chargement de la config (À LAISSER EN HAUT DU FICHIER, DOIT ÊTRE CHARGÉ EN PREMIER)
+const config = require("./config/config");
 
 // modules
 const express = require("express");
@@ -9,11 +9,8 @@ const sessions = require("client-sessions");
 // connection database
 const connectDB = require("./config/database/db");
 
-// selection du port
-const PORT = require("./config/port").PORT;
-
-// selection du host
-const HOST = require("./config/host").HOST;
+// connexion à la BD
+require("./config/database/db")(config.DATABASE_URL);
 
 // création de l'app
 const app = express();
@@ -46,7 +43,7 @@ app.set("view engine", "ejs");
 const { Login, Register, Programme, Projet, Tache } = require("./routes");
 
 // page d'acceuil
-app.get("/", (req, res) => {
+app.get("/", (_, res) => {
     res.redirect("/Programmes");
 });
 
@@ -69,8 +66,8 @@ app.use("*", routeErr);
 
 ////////////////////////////////////////////////
 /* Démarrage du serveur */
-app.listen(PORT, HOST, () => {
-    console.log(`> Serveur Running on : http://${HOST}:${PORT}`);
+app.listen(config.PORT, config.HOST, () => {
+    console.log(`> Serveur Running on : http://${config.HOST}:${config.PORT}`);
 });
 
 module.exports = app;

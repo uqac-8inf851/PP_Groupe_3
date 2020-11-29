@@ -8,7 +8,7 @@ Ce répertoire contient les sources pour le projet pratique du cours de Génie L
 
 ### Pré-requis
 
-1. Installer NodeJS ([la version la plus récente](https://nodejs.org/en/download/))
+1. Installer NodeJS ([la version la plus récente](https://nodejs.org/en/download/)) en vous assurant d'installer npm (normalement vient par défaut avec NodeJS)
 1. Installer MongoDB Community Edition ([ici](https://docs.mongodb.com/manual/administration/install-community/))
 
 ### Installation du projet
@@ -18,7 +18,7 @@ Ce répertoire contient les sources pour le projet pratique du cours de Génie L
 
 ### Lancement du projet
 
-1. Lancer le serveur NodeJS en executant la commande `npm run debug` depuis la racine du projet
+1. Lancer le serveur NodeJS en executant la commande `npm run debug` (en version development) ou `npm run start` (en version production) depuis la racine du projet
 1. Ouvrez votre navigateur à l'adresse indiquer par les logs de votre console ayant lancée le programme (normalement _http://localhost:5500/_)
 
 ### Tester le projet
