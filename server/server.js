@@ -1,3 +1,6 @@
+// l'environnement par défaut est "development"
+process.env.NODE_ENV = process.env.NODE_ENV || "development";
+
 // chargement de la config (À LAISSER EN HAUT DU FICHIER, DOIT ÊTRE CHARGÉ EN PREMIER)
 const config = require("./config/config");
 
@@ -5,9 +8,10 @@ const config = require("./config/config");
 const express = require("express");
 const bodyParser = require("body-parser");
 const sessions = require("client-sessions");
+const morgan = require("morgan");
 
-// connection database
-const connectDB = require("./config/database/db");
+// import du logger
+const logger = require("./config/logger/winston");
 
 // connexion à la BD
 require("./config/database/db")(config.DATABASE_URL);
@@ -15,10 +19,8 @@ require("./config/database/db")(config.DATABASE_URL);
 // création de l'app
 const app = express();
 
-// connexion à la BD
-connectDB();
-
 // Initialisation des middlewares
+app.use(morgan("combined", { stream: logger.morganStream }));
 app.use(express.static("./Public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -67,7 +69,8 @@ app.use("*", routeErr);
 ////////////////////////////////////////////////
 /* Démarrage du serveur */
 app.listen(config.PORT, config.HOST, () => {
-    console.log(`> Serveur Running on : http://${config.HOST}:${config.PORT}`);
+    console.log(`> Server Running on : http://${config.HOST}:${config.PORT}`);
+    logger.info("> Server Running on : http://%s:%d", config.HOST, config.PORT);
 });
 
 module.exports = app;

@@ -1,4 +1,5 @@
 var express = require("express");
+const logger = require("../../config/logger/winston");
 
 const ProjetDAO = require("../../class/Dao/ProjetDAO");
 
@@ -11,6 +12,7 @@ router.get("/", (req, res) => {
     new ProjetDAO()
         .getAllProjectForUser(searcherId)
         .then((projects) => {
+            logger.info("/Projet (GET) Accès réussi pour l'utilisateur '%s'", searcherId);
             return res.render("index.ejs", {
                 Projets: projects,
                 template: "./Projet/Projet",
@@ -19,7 +21,7 @@ router.get("/", (req, res) => {
             });
         })
         .catch((err) => {
-            console.error(err);
+            logger.error("/Projet (GET): ProjetDAO().getAllProjectForUser(%s) -> Erreur: %O", searcherId, err);
             return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
@@ -54,10 +56,18 @@ router.post("/Create", (req, res) => {
     new ProjetDAO()
         .create(searcherId, name, description, programId)
         .then(() => {
+            logger.info("Projet/Create (POST): Projets '%s' créé avec succès -> Redirection vers '/Projet'", name);
             return res.redirect("/Projet");
         })
         .catch((err) => {
-            console.error(err);
+            logger.error(
+                "Projet/Create (POST): ProjetDAO().create(%s, %s, %s, %s) -> Erreur: %O",
+                searcherId,
+                name,
+                description,
+                programId,
+                err
+            );
             return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
@@ -75,10 +85,22 @@ router.post("/AddSearcher/:projectId", (req, res) => {
     new ProjetDAO()
         .addSearcherToProject(email, projectId)
         .then(() => {
+            logger.info(
+                "Projet/AddSearcher/%s (POST) -> Ajout avec succès du chercheur '%s' au projet %s. Redirection vers /Projet",
+                projectId,
+                email,
+                projectId
+            );
             return res.redirect("/Projet");
         })
         .catch((err) => {
-            console.error(err);
+            logger.error(
+                "Projet/AddSearcher/%s (POST) -> Erreur à l'ajout du chercheur '%s' au projet %s. Erreur: %O",
+                projectId,
+                email,
+                projectId,
+                err
+            );
             return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
@@ -95,10 +117,20 @@ router.post("/Delete/:id", (req, res) => {
     new ProjetDAO()
         .deleteById(id)
         .then(() => {
+            logger.info(
+                "Projet/delete/%s (POST) -> Suppression du projet %s avec succès. Redirection vers /Projet",
+                id,
+                id
+            );
             return res.redirect("/Projet");
         })
         .catch((err) => {
-            console.error(err);
+            logger.error(
+                "Projet/delete/%s (POST) -> Erreur lors de la suppression du projet %s. Erreur: %O",
+                id,
+                id,
+                err
+            );
             return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,

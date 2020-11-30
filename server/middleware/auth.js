@@ -1,3 +1,4 @@
+const logger = require("../config/logger/winston");
 const { Searcher } = require("../class/Models/Models");
 
 module.exports = (req, res, next) => {
@@ -5,7 +6,10 @@ module.exports = (req, res, next) => {
 
     Searcher.findById(req.session.searcherId, (err, searcher) => {
         if (err) {
-            console.error(err);
+            logger.err(
+                "Erreur lors de la recherche du chercheur d'id '%s'. Redirection vers /Login. Détail de l'erreur : %O",
+                err
+            );
             return res.redirect("/Login");
         }
 

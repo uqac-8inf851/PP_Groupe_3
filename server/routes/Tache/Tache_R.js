@@ -1,4 +1,5 @@
 var express = require("express");
+const logger = require("../../config/logger/winston");
 
 const TaskDAO = require("../../class/Dao/TaskDAO");
 
@@ -11,6 +12,7 @@ router.get("/", (req, res) => {
     new TaskDAO()
         .getAllTaskForUser(searcherId)
         .then((tasks) => {
+            logger.info("/Taches (GET) Accès réussi pour l'utilisateur '%s'", searcherId);
             return res.render("index.ejs", {
                 Tasks: tasks,
                 template: "./Tache/Tache",
@@ -19,7 +21,7 @@ router.get("/", (req, res) => {
             });
         })
         .catch((err) => {
-            console.error(err);
+            logger.error("/Taches (GET): TaskDAO().getAllTaskForUser(%s) -> Erreur: %O", searcherId, err);
             return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
@@ -65,10 +67,22 @@ router.post("/Create", (req, res) => {
     new TaskDAO()
         .create(searcherId, name, note, startingDate, endingDate, priority, modifiedDuration, projectId)
         .then(() => {
+            logger.info("Tache/Create (POST): Tâche '%s' créée avec succès -> Redirection vers '/Tache'", name);
             return res.redirect("/Tache");
         })
         .catch((err) => {
-            console.error(err);
+            logger.error(
+                "Tache/Create (POST): TaskDAO().create(%s, %s, %s, %s, %s, %s, %s, %s) -> Erreur: %O",
+                searcherId,
+                name,
+                note,
+                startingDate,
+                endingDate,
+                priority,
+                modifiedDuration,
+                projectId,
+                err
+            );
             return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
@@ -86,10 +100,22 @@ router.post("/AddSearcher/:taskId", (req, res) => {
     new TaskDAO()
         .addSearcherToTask(email, taskId)
         .then(() => {
+            logger.info(
+                "Tache/AddSearcher/%s (POST) -> Ajout avec succès du chercheur '%s' à la tâche %s. Redirection vers /Tache",
+                taskId,
+                email,
+                taskId
+            );
             return res.redirect("/Tache");
         })
         .catch((err) => {
-            console.error(err);
+            logger.error(
+                "Projet/AddSearcher/%s (POST) -> Erreur à l'ajout du chercheur '%s' à la tâche %s. Erreur: %O",
+                taskId,
+                email,
+                taskId,
+                err
+            );
             return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,
@@ -106,10 +132,20 @@ router.post("/Delete/:id", (req, res) => {
     new TaskDAO()
         .deleteById(id)
         .then(() => {
+            logger.info(
+                "Tache/delete/%s (POST) -> Suppression de la tâche %s avec succès. Redirection vers /Tache",
+                id,
+                id
+            );
             return res.redirect("/Tache");
         })
         .catch((err) => {
-            console.error(err);
+            logger.error(
+                "Tache/delete/%s (POST) -> Erreur lors de la suppression de la tâche %s. Erreur: %O",
+                id,
+                id,
+                err
+            );
             return res.render("index.ejs", {
                 template: "./Utils/Error",
                 err,

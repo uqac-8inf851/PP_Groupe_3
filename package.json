@@ -4,9 +4,9 @@
     "description": "Projet pratique du cours de génie logiciel",
     "main": "server/server.js",
     "scripts": {
-        "start": "cross-env NODE_ENV=prod pm2-runtime start ecosystem.config.js",
+        "start": "cross-env NODE_ENV=production pm2-runtime start ecosystem.config.js",
         "heroku": "cross-env NODE_ENV=heroku pm2-runtime start ecosystem.config.js",
-        "debug": "cross-env NODE_ENV=dev nodemon ./server/server.js",
+        "debug": "cross-env NODE_ENV=development nodemon ./server/server.js",
         "test": "cross-env NODE_ENV=test nyc --reporter=text-summary mocha ./tests/start.test.js --exit --timeout=6000",
         "coverage": "cross-env NODE_ENV=test nyc --reporter=text --reporter=html mocha ./tests/start.test.js --exit --timeout=6000",
         "lint": "eslint ./server",
@@ -26,7 +26,8 @@
         "mongoose": "^5.10.7",
         "morgan": "^1.10.0",
         "pm2": "^4.5.0",
-        "winston": "^3.3.3"
+        "winston": "^3.3.3",
+        "winston-loggly-bulk": "^3.1.1"
     },
     "devDependencies": {
         "babel-eslint": "^10.1.0",

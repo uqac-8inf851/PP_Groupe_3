@@ -1,3 +1,4 @@
+const logger = require("./logger/winston");
 const dbConfig = require("./database/db_config");
 
 const NODE_ENV_ARRAY = ["development", "production", "test", "heroku"];
@@ -15,19 +16,9 @@ const HOST_PROD = "localhost";
 const HOST_HEROKU = "0.0.0.0";
 
 module.exports = (function () {
-    // l'environnement par défaut est "development"
-    process.env.NODE_ENV = process.env.NODE_ENV || "development";
-
-    // on remet bien les noms
-    if (process.env.NODE_ENV === "prod") {
-        process.env.NODE_ENV = "production";
-    } else if (process.env.NODE_ENV === "dev") {
-        process.env.NODE_ENV = "development";
-    }
-
     // si l'environnement n'est pas valide, on termine le processus
     if (!NODE_ENV_ARRAY.includes(process.env.NODE_ENV)) {
-        console.error("l'environnement est invalide :", process.env.NODE_ENV);
+        logger.error("L'environnement NodeJS executé est invalide : %s", process.env.NODE_ENV);
         process.exit(1);
     }
 
