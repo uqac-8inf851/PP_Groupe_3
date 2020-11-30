@@ -4,7 +4,7 @@ const dbConfig = require("./database/db_config");
 const NODE_ENV_ARRAY = ["development", "production", "test", "heroku"];
 
 // ports
-const PORT_PROD = process.argv[2] || 5500;
+const PORT_PROD = process.env.PORT || 5500;
 const PORT_DEV = process.env.PORT || 5500;
 const PORT_TEST = process.env.PORT || 5500;
 const PORT_HEROKU = process.env.PORT || 80;

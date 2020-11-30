@@ -4,7 +4,7 @@
     "description": "Projet pratique du cours de génie logiciel",
     "main": "server/server.js",
     "scripts": {
-        "start": "cross-env NODE_ENV=production pm2-runtime start ecosystem.config.js",
+        "start": "cross-env NODE_ENV=production pm2-runtime start ecosystem.scalable.config.js",
         "heroku": "cross-env NODE_ENV=heroku pm2-runtime start ecosystem.config.js",
         "debug": "cross-env NODE_ENV=development nodemon ./server/server.js",
         "test": "cross-env NODE_ENV=test nyc --reporter=text-summary mocha ./tests/start.test.js --exit --timeout=6000",
