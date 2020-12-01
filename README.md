@@ -13,13 +13,13 @@ Ce répertoire contient les sources pour le projet pratique du cours de Génie L
 
 ### Installation du projet
 
-1. Cloner le projet avec la commande `git clone https://github.com/uqac-8inf851/PP_Groupe_3.git` (attention la branch principale s'appelle `main`)
+1. Cloner le projet avec la commande `git clone https://github.com/uqac-8inf851/PP_Groupe_3.git` (attention la branche principale s'appelle `main`)
 1. Executer `npm install` à la racine du dossier pour installer les modules NPM
 
 ### Lancement du projet
 
-1. Lancer le serveur NodeJS en executant la commande `npm run debug` (en version development) ou `npm run start` (en version production) depuis la racine du projet
-1. Ouvrez votre navigateur à l'adresse indiquer par les logs de votre console ayant lancée le programme (normalement _http://localhost:5500/_)
+1. Lancer le serveur NodeJS en executant la commande `npm run debug` (en version dévelopemment) ou `npm run start` (en version production) depuis la racine du projet
+1. Ouvrez votre navigateur à l'adresse indiquée par les logs de votre console ayant lancée le programme (normalement `http://localhost:5500/`)
 
 ### Tester le projet
 
@@ -38,27 +38,3 @@ Ce répertoire contient les sources pour le projet pratique du cours de Génie L
 -   [Prettier](https://prettier.io/) (pour le formattage automatique du code)
 -   [ESLint](https://eslint.org/) (pour les bases du clean coding en JS)
 -   [Github Action](https://github.com/features/actions) (pour l'intégration continue)
-
-## Gestion de projet
-
-### Améliorations à faire (rendu en cours)
-
--   Système de logging
--   Intégration continue : déploiement automatique au push sur main
-
-### Choses améliorables
-
--   Setup les variables d'environnement proprement (.env, etc)
--   Améliorer les schémas (default, validation, etc)
--   Vérification des paramètres côté serveur à la reception avec [express-validator](https://express-validator.github.io/docs/check-api.html)
--   Validation des données dans les DAO (longueur, etc, ...)
--   Piste de reflexion pour le renvoi des erreurs au front : [stackoverflow](https://stackoverflow.com/questions/52341893/form-validation-and-displaying-error-message-using-ejs)
--   Gestion des permissions (seul l'admin du program peut supprimer le programme)
--   Améliorer le routing, les redirections et le système d'erreur
--   Faire les tests pour les DAO
-
-### Bugs
-
--   De temps en temps à l'execution des tests l'erreur "MongooseServerSelectionError: Server selection timed out after ...ms" apparaît et empêche les tests de s'effectuer
--   On peut supprimer le programme même si on est pas admin
--   D'ailleurs ajouter un admin au projet pour que seul lui puisse supprimer serait pas mal
